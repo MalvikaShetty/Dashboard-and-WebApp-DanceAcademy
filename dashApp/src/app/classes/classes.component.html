@@ -1,0 +1,172 @@
+
+ 
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+  <div class="card mb-3">
+    <div class="card card-body p-3">
+      <div class="chart">
+        <canvas id="pie-chart" class="chart-canvas" height="400" width="2000"></canvas>
+        <canvas id="bar-chart" class="chart-canvas" height="100px"></canvas>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card card-chart">
+    <div class="card-header card-header-icon card-header-danger">
+      <div class="card-icon">
+        <i class="material-icons">pie_chart</i>
+      </div>
+      <h4 class="card-title">Pie Chart</h4>
+    </div>
+    <div class="card-body">
+      <div id="chartPreferences" class="ct-chart"></div>
+    </div>
+    <div class="card-footer">
+      <div class="row">
+        <div class="col-md-12">
+          <h6 class="card-category">Legend</h6>
+        </div>
+        <div class="col-md-12">
+          <i class="fa fa-circle text-info"></i> Apple
+          <i class="fa fa-circle text-warning"></i> Samsung
+          <i class="fa fa-circle text-danger"></i> Windows Phone
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="container-fluid py-4 card card-chart">
+    <div class="text-center mb-5">
+      <h2 class="marker marker-center">Programs</h2>
+    </div>
+  <div class="row" *ngFor="let s of service.listStyleInfo;let i=index"> 
+    <button type="button" class="collapsible" (click)="onClickStyle(s.styleId,i)">{{s.styleName}}<span style="margin-left:60em">Click to expand</span></button>
+    <div *ngIf="up[i]">
+      <div class="card-body px-0 pb-2">
+        <div class="table-responsive p-0">
+          <table class="table align-items-center mb-0">
+            <thead>
+              <tr>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Program Name</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Instructor Name</th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Start Date</th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">End Date</th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fees</th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">About the program</th>
+                <th class="text-secondary opacity-7"></th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let p of service.listProg">
+              <tr>
+                <td>
+                  <h4 class="text-xs font-weight-bold mb-0">{{p.programName}}</h4>
+                  <!-- <p class="text-xs text-secondary mb-0">Organization</p> -->
+                </td>
+                <td>
+                  <div class="d-flex px-2 py-1">
+                    <!-- <div>
+                      <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                    </div> -->
+                    <div class="d-flex flex-column justify-content-center">
+                      <h6 class="mb-0 text-sm">{{p.instructorName}}</h6>
+                      <!-- <p class="text-xs text-secondary mb-0">john@creative-tim.com</p> -->
+                    </div>
+                  </div>
+                </td>
+               
+                <td class="align-middle text-center text-sm">
+                  <span class="badge badge-sm bg-gradient-success">{{p.startDate}}</span>
+                </td>
+                <td class="align-middle text-center text-sm">
+                  <span class="badge badge-sm bg-gradient-success">{{p.endDate}}</span>
+                </td>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">{{p.fees}}</span>
+                </td>
+                <td class="align-middle text-center" (click)="onClickPD(p.programName)">
+                  <a class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                    Click to know more
+                  </a>
+                </td>
+              </tr>
+          
+            </tbody>
+           
+          </table>
+         
+        </div>
+      </div>
+      <!-- <div *ngFor="let p of service.listProg">
+        <p  (click)="onClickPD(p.programId)">{{p.progName}}, {{p.instructorName}}, {{p.startDate}}, </p>
+        <div *ngIf="expandProgram">
+          <div  *ngFor="let pd of service.listProgDays">
+            <p>{{pd.day}}, {{pd.startTime}} - </p><p>{{pd.endTime}}</p>
+          </div> 
+        </div>
+      </div> -->
+    </div>
+  </div>  
+</div>  
+
+
+<!-- MODALS -->
+
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div *ngIf="expandProgram">
+              <div class="modal-header">
+                  <h4 class="modal-title">Program Details</h4>
+                
+                  <button type="button" class="btn btn-primary btn-lg" aria-label="Close" (click)="onCloseHandled()"><span
+                          aria-hidden="true">&times;</span></button>
+              </div>
+                  <div class="modal-body">
+                    <div class="card mt-3" style="max-width:150%;">
+                      <img src="assets\img\hiphop1.jfif" class="card-img-top" alt="...">
+                      <div class="card-body" *ngFor="let pd of service.listProgDays">
+                        <h4>{{pd.programName}}</h4>
+                        <p class="card-text">{{pd.day}}: {{pd.startTime}} - {{pd.endTime}}</p>
+                      </div>
+                      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                      <a href="#" class="btn btn-primary bg-dark">Go somewhere</a>
+                    </div>
+                  </div>
+          </div>
+       
+      </div>
+  </div>
+</div>
+
+</main>
+<!-- <form>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group input-group-outline my-3">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group input-group-outline my-3">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" disabled>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group input-group-outline is-valid my-3">
+          <label class="form-label">Success</label>
+          <input type="email" class="form-control">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group input-group-outline is-invalid my-3">
+          <label class="form-label">Error</label>
+          <input type="email" class="form-control">
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary" type="button">Button</button>
+  </form> -->
