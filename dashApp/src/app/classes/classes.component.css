@@ -30,3 +30,8 @@
     background-color: #04AA6D;
     color: white;
   }
+
+  .flexhoriz{
+   display:flex;
+   flex-direction: row;
+  }

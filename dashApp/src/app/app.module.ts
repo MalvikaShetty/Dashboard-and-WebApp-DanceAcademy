@@ -7,6 +7,7 @@ import { DashComponent } from './dash/dash.component';
 import { StudentsComponent } from './students/students.component';
 import { ClassesComponent } from './classes/classes.component';
 import { InstAndStaffComponent } from './inst-and-staff/inst-and-staff.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { InstAndStaffComponent } from './inst-and-staff/inst-and-staff.component
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

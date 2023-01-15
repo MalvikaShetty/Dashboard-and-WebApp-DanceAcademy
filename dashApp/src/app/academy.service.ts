@@ -39,6 +39,9 @@ export class AcademyService {
   formDataStudentFees:StudentFees=new StudentFees();
   listStudentFees: StudentFees[]=[];
 
+  formDataStudentCount:StudentInfo=new StudentInfo();
+  listStudentCount: StudentInfo[]=[];
+
   readonly instructbase="https://localhost:4200/api/instructors"
   // formDataProg:Programs=new Programs();
   // listProg: Programs[]=[];
@@ -55,7 +58,6 @@ export class AcademyService {
 
   getStyleDetails(){
     this.http.get(this.classbase+"/getstyle").toPromise().then(res=> this.listStyleInfo = res as StyleInfo[]);
-   
   }
 
   // PROGRAMS
@@ -74,13 +76,13 @@ export class AcademyService {
    
   // }
 
-  // updateProjDetails(): Observable<any>{
-  //   return this.http.put<any>(this.base+'/updateproj/'+ this.formDataProj.projId , this.formDataProj);
-  // }
+  updateProgDetails(): Observable<any>{
+    return this.http.put<any>(this.classbase+'/updateprog/'+ this.formDataProg.programId , this.formDataProg);
+  }
 
-  // deleteProjDetails(id:any): Observable<any>{
-  //   return this.http.delete<any>(this.base+'/deleteproj/'+ id);
-  // }
+  deleteProgDetails(id:any): Observable<any>{
+    return this.http.delete<any>(this.classbase+'/deleteprog/'+ id);
+  }
 
     // PROGRAMDAYS
 
@@ -102,6 +104,11 @@ export class AcademyService {
 
   getStudentDetails(){
     this.http.get(this.studentbase+"/getstudent").toPromise().then(res=> this.listStudentInfo = res as StudentInfo[]);
+   
+  }
+
+  getStudentCount(){
+    return this.http.get(this.studentbase+"/getstudentscount");
    
   }
 

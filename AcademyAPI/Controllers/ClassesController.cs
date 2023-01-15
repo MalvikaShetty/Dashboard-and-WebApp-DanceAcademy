@@ -42,32 +42,32 @@ namespace AcademyAPI.Controllers
             return CreatedAtAction("GetPrograms", new { name = prog.ProgramName }, prog);
         }
 
-    /*    [HttpDelete("deleteproj/{id}")]
+        [HttpDelete("deleteprog/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IEnumerable<Projects>>> DeleteProject(int id)
+        public async Task<ActionResult<IEnumerable<Programs>>> DeleteProgram(int id)
         {
-            var projDel = await _context.projects.FindAsync(id);
-            if (projDel == null) return NotFound();
+            var progDel = await _context.programs.FindAsync(id);
+            if (progDel == null) return NotFound();
 
-            _context.projects.Remove(projDel);
+            _context.programs.Remove(progDel);
             await _context.SaveChangesAsync();
             return NoContent();
 
         }
 
-        [HttpPut("updateproj/{id}")]
+        [HttpPut("updateprog/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> ProjectUpdate(int id, Projects proj)
+        public async Task<IActionResult> ProgramUpdate(int id, Programs prog)
         {
-            if (id != proj.ProjId) return BadRequest();
+            if (id != prog.ProgramId) return BadRequest();
 
-            _context.Entry(proj).State = EntityState.Modified;
+            _context.Entry(prog).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }*/
+        }
 
         /*STYLE INFO*/
 
