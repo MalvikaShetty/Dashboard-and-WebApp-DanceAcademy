@@ -252,8 +252,8 @@
               <input type="hidden" name="projId" [value]="service.formDataProg.programId" />
               <div class="form-group">
                 <label>Style Name</label>
-                <select type="number"  class="form-control form-control-lg dropdown">
-                  <option *ngFor="let s of service.listStyleInfo" (click)="takeStyleId(s.styleId)">{{s.styleName}}</option>
+                <select type="number" class="form-control form-control-lg dropdown" [(ngModel)]="service.formDataProg">
+                  <option *ngFor="let s of service.listStyleInfo" value="s.styleId">{{s.styleName}}</option>
                 </select>
                   <label>Program Name</label>
                   <input class="form-control form-control-lg" name="style" 
@@ -303,12 +303,7 @@
             </div>
             <form novalidate autocomplete="off" #form="ngForm" (submit)="updateProg(form)">
               <input type="hidden" name="projId" [value]="service.formDataProg.programId" />
-              <div class="form-group">
-                <label>Style Name</label>
-                <select type="number" class="form-control form-control-lg dropdown" [(ngModel)]="service.formDataProg.styleId">
-                  <option *ngFor="let s of service.listStyleInfo" value={{s.styleId}}>{{s.styleName}}</option>
-                </select>
-              </div>
+              
                 <div class="form-group">
                   <label>Program Name</label>
                   <input class="form-control form-control-lg" name="progn" 

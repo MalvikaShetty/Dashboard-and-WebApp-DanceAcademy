@@ -10,5 +10,6 @@ namespace AcademyAPI.Models
         public string StudEmail { get; set; }
         public string StudPassword { get; set; }
         public DateTime RegDate { get; set; }
+        public string? Status { get; set; } //Active inactive
     }
 }

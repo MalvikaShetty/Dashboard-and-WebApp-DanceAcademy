@@ -16,5 +16,7 @@ namespace AcademyAPI.Models
         public DbSet<StudentInfo> studinfo { get; set; }
         public DbSet<StudentClass> studclass { get; set; }
         public DbSet<StudentFees> studfees { get; set; }
+        public DbSet<InstructorInfo> instinfo { get; set; }
+        public DbSet<StaffInfo> staffinfo { get; set; }
     }
 }

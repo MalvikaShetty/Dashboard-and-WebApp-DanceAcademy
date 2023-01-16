@@ -27,7 +27,7 @@ export class ClassesComponent implements OnInit {
   updateProgram=false;
   delProgram=false;
   valueStyleId=0;
-  chart:any=[];
+ 
 
   ngOnInit(): void {
     

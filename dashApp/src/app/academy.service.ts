@@ -8,6 +8,7 @@ import { StudentProgramCount } from './models/Classes/studentsProgramCount.model
 import { StudentInfo } from './models/Students/studentsInfo.models';
 import { StudentClasses } from './models/Students/studentClasses.models';
 import { StudentFees } from './models/Students/studentFees.models';
+import { InstructorInfo } from './models/Instructors/instructorInfo.models';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,8 @@ export class AcademyService {
   
   formDataStudentProg:StudentProgramCount=new StudentProgramCount();
   listStudentProgramCount: StudentProgramCount[]=[];
+
+  listProgInstDaysView: any[]=[];
   
   readonly studentbase="https://localhost:7048/api/Students"
   formDataStudentInfo:StudentInfo=new StudentInfo();
@@ -42,12 +45,12 @@ export class AcademyService {
   formDataStudentCount:StudentInfo=new StudentInfo();
   listStudentCount: StudentInfo[]=[];
 
-  readonly instructbase="https://localhost:4200/api/instructors"
-  // formDataProg:Programs=new Programs();
-  // listProg: Programs[]=[];
+  readonly instructbase="https://localhost:7048/api/instructor"
+  formDataInst:InstructorInfo=new InstructorInfo();
+  listInst: InstructorInfo[]=[];
 
-  // formDataProg:Programs=new Programs();
-  // listProg: Programs[]=[];
+  formDataFreelanceInst:InstructorInfo=new InstructorInfo();
+  listFreelanceInst: InstructorInfo[]=[];
 
 
   // STYLE
@@ -120,6 +123,42 @@ export class AcademyService {
   
     getStudentClasses(){
       this.http.get(this.studentbase+"/getstudentclass").toPromise().then(res=> this.listStudentClasses = res as StudentClasses[]);
+    }
+
+    getStudentCountEachProg(){
+      return this.http.get(this.studentbase+"/getstudentscounteachprog");
+    }
+
+    //INSTRUCTORS
+    
+    getPermInstCount(){
+      return this.http.get(this.instructbase+"/getperminstcount");
+    }
+
+    getFreelanceInstCount(){
+      return this.http.get(this.instructbase+"/getfreelanceinstcount");
+    }
+
+    getPermInst(){
+      return this.http.get(this.instructbase+"/getpermanentinst").toPromise().then(res=> this.listInst = res as InstructorInfo[]);
      
     }
+
+    getFreelanceInst(){
+      return this.http.get(this.instructbase+"/getfreelanceinst").toPromise().then(res=> this.listFreelanceInst = res as InstructorInfo[]);
+     
+    }
+
+    postInstDetails(inst:InstructorInfo): Observable<any>{
+      return this.http.post<any>(this.instructbase+"/addinst", this.formDataInst);
+    }
+
+    //DASHBOARD GET VIEW PROGRAM INSTRUCTOR AND DAYS
+
+    getProgramView(){
+      return this.http.get(this.classbase+"/getprogramview").toPromise().then(res=> this.listProgInstDaysView = res as any[]);
+     
+    }
+
+    
 }

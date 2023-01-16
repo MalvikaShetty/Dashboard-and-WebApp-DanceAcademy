@@ -25,6 +25,11 @@ namespace AcademyAPI.Controllers
             return await _context.studinfo.ToListAsync();
         }
 
+        [HttpGet("getstudentclass")]
+        public async Task<ActionResult<IEnumerable<StudentClass>>> GetStudentClass()
+        {
+            return await _context.studclass.ToListAsync();
+        }
 
         [HttpGet("getstudentscount")]
         public async Task<object> GetStdCount()
@@ -43,6 +48,23 @@ namespace AcademyAPI.Controllers
             
         }
 
+        [HttpGet("getstudentscounteachprog")]
+        public async Task<object> GetStdCountEachProg()
+        {
+            var query = (from sc in _context.studclass
+                         join p in _context.programs on sc.ProgramId equals p.ProgramId
+                         group sc by new { p.ProgramName}
+             into grp
+                         select new
+                         {
+                             grp.Key.ProgramName,
+                             StudentCount = grp.Count()
+                         }).ToListAsync();
+            /* var count = await _context.studinfo.GroupBy(x => new { x.RegDate.Date.Year, x.RegDate.Date.Month }).ToListAsync();*/
+            return await query;
+
+        }
+
         [HttpPost("addstudent")]
         public async Task<ActionResult<StudentInfo>> PostStudent(StudentInfo stud)
         {
@@ -50,6 +72,15 @@ namespace AcademyAPI.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetStudents", new { id = stud.StudentId }, stud);
+        }
+
+        [HttpPost("addstudentclass")]
+        public async Task<ActionResult<StudentClass>> PostStudentClass(StudentClass studcls)
+        {
+            _context.studclass.Add(studcls);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetStudentClass", new { id = studcls.StudentClId }, studcls);
         }
     }
 }

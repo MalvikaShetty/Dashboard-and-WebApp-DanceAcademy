@@ -9,11 +9,10 @@ namespace AcademyAPI.Models.Classes
         public int ProgramId { get; set; }
         public int StyleId { get; set; }
         public string ProgramName { get; set; }
-
-        /*[ForeignKey("InstructorName")]*/
-        public string InstructorName { get; set; }
+        public int InstId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int Fees { get; set; }
+        public string Status { get; set; } //Active inactive
     }
 }

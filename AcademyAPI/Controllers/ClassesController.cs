@@ -96,9 +96,9 @@ namespace AcademyAPI.Controllers
 
         //get specific programs based on programName
         [HttpGet("getprogday/{name}")]
-        public async Task<ActionResult<IEnumerable<ProgramDays>>> GetProgramDaysByName(string name)
+        public async Task<ActionResult<IEnumerable<ProgramDays>>> GetProgramDaysByName(int id)
         {
-            return await _context.progdays.Where(t => t.ProgramName == name).ToListAsync();
+            return await _context.progdays.Where(t => t.ProgramId == id).ToListAsync();
         }
 
 
@@ -109,6 +109,51 @@ namespace AcademyAPI.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetProgramDays", new { id = progdays.PDId }, progdays);
+        }
+
+        [HttpDelete("deleteprogdays/{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IEnumerable<ProgramDays>>> DeleteProgramDays(int id)
+        {
+            var progDel = await _context.progdays.FindAsync(id);
+            if (progDel == null) return NotFound();
+
+            _context.progdays.Remove(progDel);
+            await _context.SaveChangesAsync();
+            return NoContent();
+
+        }
+
+        //PROGRAM, PROGRAM DAYS AND INSTRUCTORS
+        //get view with latest added program name, instructor, days, timings and start end date
+
+        [HttpGet("getprogramview")]
+        public async Task<object> GetStdCountEachProg()
+        {
+            var query = (from p in _context.programs
+                         join i in _context.instinfo on p.InstId equals i.InstId
+                         join pd in _context.progdays on p.ProgramId equals pd.ProgramId
+                        // select new { p.ProgramId, p.ProgramName, i.InstFullName, p.StartDate, p.EndDate, pd.Day, pd.StartTime, pd.EndTime }
+                         /*into t1*/
+                         group new { p, i, pd }  by new { p.ProgramId}
+             into grp
+                         select new
+                         {
+                             grp.Key.ProgramId,
+                             ProgName = grp.Select(g => g.p.ProgramName),
+                             InstName = grp.Select(g => g.i.InstFullName),
+                             StartD = grp.Select(g => g.p.StartDate.Date.Year + "/" + g.p.StartDate.Date.Month + "/" + g.p.StartDate.Date.Day),
+                             EndD = grp.Select(g => g.p.EndDate.Date.Year + "/" + g.p.EndDate.Date.Month + "/" + g.p.EndDate.Date.Day),
+                             Day = grp.Select(g => g.pd.Day),
+                             StartT = grp.Select(g => g.pd.StartTime),
+                             EndT = grp.Select(g => g.pd.EndTime),
+    
+                           
+
+                         }).ToListAsync();
+          
+            return await query;
         }
     }
 }

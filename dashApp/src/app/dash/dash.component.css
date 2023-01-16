@@ -1,0 +1,13 @@
+ 
+.active {
+    background-color: #d63384;
+  }
+   
+  .inactive {
+    background-color: none;
+  }
+
+  .flexhoriz{
+    display:flex;
+    flex-direction: row;
+   }

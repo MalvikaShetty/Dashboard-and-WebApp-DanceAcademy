@@ -4,6 +4,7 @@ using AcademyAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AcademyAPI.Migrations
 {
     [DbContext(typeof(AcademyDbContext))]
-    partial class AcademyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230115234214_staffinsttable")]
+    partial class staffinsttable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,8 +41,9 @@ namespace AcademyAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProgramId")
-                        .HasColumnType("int");
+                    b.Property<string>("ProgramName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StartTime")
                         .IsRequired()
@@ -64,8 +68,9 @@ namespace AcademyAPI.Migrations
                     b.Property<int>("Fees")
                         .HasColumnType("int");
 
-                    b.Property<int>("InstId")
-                        .HasColumnType("int");
+                    b.Property<string>("InstructorName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProgramName")
                         .IsRequired()
@@ -74,81 +79,12 @@ namespace AcademyAPI.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("StyleId")
                         .HasColumnType("int");
 
                     b.HasKey("ProgramId");
 
                     b.ToTable("programs");
-                });
-
-            modelBuilder.Entity("AcademyAPI.Models.InstructorInfo", b =>
-                {
-                    b.Property<int>("InstId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InstId"));
-
-                    b.Property<DateTime>("InstContractFrom")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("InstContractTo")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("InstFullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("InstType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("StyleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("InstId");
-
-                    b.ToTable("instinfo");
-                });
-
-            modelBuilder.Entity("AcademyAPI.Models.StaffInfo", b =>
-                {
-                    b.Property<int>("StaffId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StaffId"));
-
-                    b.Property<DateTime>("StaffContractFrom")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("StaffContractTo")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("StaffFullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StaffRole")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("StaffId");
-
-                    b.ToTable("staffinfo");
                 });
 
             modelBuilder.Entity("AcademyAPI.Models.StudentClass", b =>

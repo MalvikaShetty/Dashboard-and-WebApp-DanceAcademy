@@ -4,4 +4,5 @@ export class StudentInfo {
     studentEmail:string='';
     studentPass:string='';
     regDate?:Date;
+    status:string='';
 } 

@@ -9,6 +9,7 @@ import { ClassesComponent } from './classes/classes.component';
 import { InstAndStaffComponent } from './inst-and-staff/inst-and-staff.component';
 import { FormsModule } from '@angular/forms';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,6 +23,7 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
