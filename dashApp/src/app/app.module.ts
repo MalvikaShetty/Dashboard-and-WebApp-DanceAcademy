@@ -8,7 +8,7 @@ import { StudentsComponent } from './students/students.component';
 import { ClassesComponent } from './classes/classes.component';
 import { InstAndStaffComponent } from './inst-and-staff/inst-and-staff.component';
 import { FormsModule } from '@angular/forms';
-import { InstructorsComponent } from './instructors/instructors.component';
+import { SearchfilterPipe } from './searchfilter.pipe';
 
 
 @NgModule({
@@ -18,7 +18,7 @@ import { InstructorsComponent } from './instructors/instructors.component';
     StudentsComponent,
     ClassesComponent,
     InstAndStaffComponent,
-    InstructorsComponent
+    SearchfilterPipe
   ],
   imports: [
     BrowserModule,

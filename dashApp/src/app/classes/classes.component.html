@@ -10,7 +10,7 @@
     </div>
     <div class="flexhoriz">
     <h2 class="marker marker-center">Regular</h2>
-    <button class="btn btn-primary" style="margin-left:68%;background-color:rgb(77, 77, 77);" (click)="modalStyleAdd()">Add Style</button>
+    <button class="btn btn-primary" style="margin-left:68%;background-color:#d63384;" (click)="modalStyleAdd()">Add Style</button>
     <button class="btn btn-primary" style="margin-left:3%;background-color:#d63384;" (click)="modalProgramAdd()">Add Program</button>
   </div>
   <div class="row" *ngFor="let s of service.listStyleInfo;let i=index"> 
@@ -81,7 +81,7 @@
 </div>  
 <!-- CHARTS -->
 <div class="card">
-  <div class="container bg-gradient-secondary shadow-primary border-radius-lg py-3 pe-1">
+  <div class="container shadow-primary border-radius-lg py-3 pe-1" style="background-color:darkkhaki;">
     <div class="row chart">
       <div class="col-6"><canvas id="pie-chart" class="chart-canvas col-6" height="100px" width="100px"></canvas></div>
       <div class="col-6"><h2>Regular Batches student count</h2><canvas id="bar-chart" class="chart-canvas col-6" height="200px"></canvas></div>

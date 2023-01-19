@@ -6,7 +6,7 @@
       <h2 class="marker marker-center">Instructors</h2>
       <!-- <button class="btn btn-primary" style="margin-left:68%;background-color:rgb(77, 77, 77);" (click)="modalStyleAdd()">Add Style</button> -->
       <div style="display:flex;flex-direction: row;">
-        <p>Search<input type="text" style="border-radius: 30px;"></p>
+        <p>Search<input type="text" [(ngModel)]="searchValue" style="border-radius: 30px;"></p>
       <button class="btn btn-primary" style="margin-left:10px;background-color:#d63384;" (click)="modalInstructorAdd()">Add Instructor</button>
       </div>
     </div>
@@ -25,37 +25,38 @@
           <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
         </tr>
       </thead>
-      <tbody *ngFor="let i of service.listInst ">
+      <tbody *ngFor="let x of service.listInstWithStyleName |  searchfilter: {instFullName: searchValue, styleName:searchValue,  instType: searchValue, status: searchValue};
+                    let m =index;" >
         <tr>
           <td class="align-middle">
-            <h4 class="text-sm font-weight-bold">{{i.instFullName}}</h4>
+            <h4 class="text-sm font-weight-bold">{{x.instFullName}}</h4>
             <!-- <p class="text-xs text-secondary mb-0">Organization</p> -->
           </td>
           <td>
             <div class="d-flex px-2 py-1">
         
               <div class="align-middle text-center text-sm">
-                <span>{{i.styleId}}</span>
+                <span>{{x.styleName}}</span>
               </div>
             </div>
           </td>
          
           <td class="align-middle text-center text-sm">
-            <span>{{i.instType}}</span>
+            <span>{{x.instType}}</span>
           </td>
           <td class="align-middle text-center text-sm">
-            <span>{{i.instContractFrom}}</span>
+            <span>{{x.instContractFrom}}</span>
           </td>
           <td class="align-middle text-center">
-            <span class="text-secondary text-xs font-weight-bold">{{i.instContractTo}}</span>
+            <span class="text-secondary text-xs font-weight-bold">{{x.instContractTo}}</span>
           </td>
           <td class="align-middle text-center">
-            <span class="text-secondary text-xs font-weight-bold">{{i.status}}</span>
+            <span class="text-secondary text-xs font-weight-bold">{{x.status}}</span>
           </td>
           <td class="flexhoriz">
-            <button class="btn btn-primary align-middle" (click)="populateForm(i)" (click)="modalInstructorUpdate()">Update</button>
+            <button class="btn btn-primary align-middle" style="background-color:rgb(77, 77, 77);" (click)="populateForm(x)" (click)="modalInstructorUpdate()">Update</button>
             <br>
-            <button class="btn btn-primary align-middle" (click)="onDeleteInst(i.instId)">Delete</button>
+            <button class="btn btn-primary align-middle" style="background-color:rgb(77, 77, 77);" (click)="onDeleteInst(x.i.instId)">Delete</button>
           </td>
         </tr>
     

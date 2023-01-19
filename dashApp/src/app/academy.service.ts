@@ -17,7 +17,7 @@ export class AcademyService {
 
   constructor(private http:HttpClient) { }
 
-  readonly classbase="https://localhost:7048/api/Classes"
+  readonly classbase="https://danceacademyapi.azurewebsites.net/api/Classes"
   formDataStyle:StyleInfo=new StyleInfo();
   listStyleInfo: StyleInfo[]=[];
 
@@ -32,7 +32,7 @@ export class AcademyService {
 
   listProgInstDaysView: any[]=[];
   
-  readonly studentbase="https://localhost:7048/api/Students"
+  readonly studentbase="https://danceacademyapi.azurewebsites.net/api/Students"
   formDataStudentInfo:StudentInfo=new StudentInfo();
   listStudentInfo: StudentInfo[]=[];
 
@@ -45,7 +45,7 @@ export class AcademyService {
   formDataStudentCount:StudentInfo=new StudentInfo();
   listStudentCount: StudentInfo[]=[];
 
-  readonly instructbase="https://localhost:7048/api/instructor"
+  readonly instructbase="https://danceacademyapi.azurewebsites.net/api/instructor"
   formDataInst:InstructorInfo=new InstructorInfo();
   listInst: InstructorInfo[]=[];
 
@@ -55,6 +55,7 @@ export class AcademyService {
   formDataFreelanceInst:InstructorInfo=new InstructorInfo();
   listFreelanceInst: InstructorInfo[]=[];
 
+  listInstWithStyleName:  InstructorInfo[]=[];
 
   // STYLE
 
@@ -136,6 +137,11 @@ export class AcademyService {
 
     getInst(){
       return this.http.get(this.instructbase+"/getinst").toPromise().then(res=> this.listInst = res as InstructorInfo[]);
+     
+    }
+
+    getInstWithStyleName(){
+      return this.http.get(this.instructbase+"/getinstwithstylenames").toPromise().then(res=> this.listInstWithStyleName = res as InstructorInfo[]);
      
     }
 

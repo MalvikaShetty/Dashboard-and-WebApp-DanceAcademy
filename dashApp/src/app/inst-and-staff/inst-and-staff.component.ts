@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AcademyService } from '../academy.service';
 import { InstructorInfo } from '../models/Instructors/instructorInfo.models';
-import { TableFilterPipe } from './table-filter.pipe';
+
 
 @Component({
   selector: 'app-inst-and-staff',
@@ -20,8 +20,12 @@ export class InstAndStaffComponent implements OnInit {
   display="none";
   active = "Active";
   inactive = "Inactive";
+  searchValue: string='';
 
   ngOnInit(): void {
+
+    //this.searchFilter();
+  
 
   //   this.service.getEpmloyees().subscribe(
   //     data => (
@@ -41,12 +45,26 @@ export class InstAndStaffComponent implements OnInit {
   //      this.employees = this.allEmployees.filter((employee) => employee.name.includes(filterValueLower)
   //    }
   // }
-  
+
     this.service.getStyleDetails();
     this.service.listStyleInfo; 
     this.service.getInst();
     this.service.listInst;
+    this.service.getInstWithStyleName();
+    this.service.listInstWithStyleName;
   }
+
+  searchFilter(searchValue, i) {
+    for (let property in i) {
+        if (i[property] === null) {
+            continue;
+        }
+        if (i[property].toString().toLowerCase().includes(searchValue.toLowerCase())) {
+            return true;
+        }
+    }
+    return false;
+}
 
   populateForm(selectedRecord:InstructorInfo){
     this.service.formDataInst =Object.assign({},selectedRecord) ;
