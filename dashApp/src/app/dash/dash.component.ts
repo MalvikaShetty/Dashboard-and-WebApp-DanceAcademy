@@ -3,6 +3,7 @@ import Chart, { Colors } from 'chart.js/auto';
 import { withLatestFrom } from 'rxjs';
 import { AcademyService } from '../academy.service';
 
+
 @Component({
   selector: 'app-dash',
   templateUrl: './dash.component.html',
@@ -27,7 +28,10 @@ export class DashComponent implements OnInit {
   instFreeCount:any;
   totalStudents=0;
 
+
   ngOnInit(): void {
+
+   
     this.service.getPermInstCount().subscribe((data)=>this.instPermCount =data);
     this.service.getFreelanceInstCount().subscribe((data)=>this.instFreeCount =data);
 
@@ -66,9 +70,10 @@ export class DashComponent implements OnInit {
       }
     });
     
-   
+   // this.labelCount = [];
     this.RenderChart(this.labelMonth,this.labelCount,"line","Students","reg-line-chart");
     this.RenderPie(this.labelProgram,this.labelCountperProgram,"pie","Students","pie-EachClass-chart");
+    this.RenderChart(this.labelProgram,this.labelCountperProgram,"bar","Students","bar-chart");
     this.cdr.markForCheck();
     // for(let i=0;i<this.labelMonth.length;i++){
     // if (this.labelMonth[i]==1){ "Jan"}
@@ -163,7 +168,8 @@ export class DashComponent implements OnInit {
         },
       },
     });
-    // myChart.update();
+     myChart.update();
+  
     
   }
 
@@ -200,7 +206,9 @@ export class DashComponent implements OnInit {
       },
     }
  
-  });
+     });
+
+     pieChart.update();
   }
 
 

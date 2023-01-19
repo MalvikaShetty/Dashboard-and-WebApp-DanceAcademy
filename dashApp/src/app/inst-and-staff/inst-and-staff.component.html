@@ -1,1 +1,191 @@
-<p>inst-and-staff works!</p>
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+    <div class="text-center mb-5">
+        <h1 class="marker marker-center">Instructors and Staff</h1>
+      </div>
+      <div class="flexhoriz">
+      <h2 class="marker marker-center">Instructors</h2>
+      <!-- <button class="btn btn-primary" style="margin-left:68%;background-color:rgb(77, 77, 77);" (click)="modalStyleAdd()">Add Style</button> -->
+      <div style="display:flex;flex-direction: row;">
+        <p>Search<input type="text" style="border-radius: 30px;"></p>
+      <button class="btn btn-primary" style="margin-left:10px;background-color:#d63384;" (click)="modalInstructorAdd()">Add Instructor</button>
+      </div>
+    </div>
+  
+<div class="table-responsive p-0">
+          
+    <table class="table align-items-center mb-0">
+      <thead>
+        <tr>
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Instructor Name</th>
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Style</th>
+          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Type</th>
+          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Start Date</th>
+          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">End Date</th>
+          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let i of service.listInst ">
+        <tr>
+          <td class="align-middle">
+            <h4 class="text-sm font-weight-bold">{{i.instFullName}}</h4>
+            <!-- <p class="text-xs text-secondary mb-0">Organization</p> -->
+          </td>
+          <td>
+            <div class="d-flex px-2 py-1">
+        
+              <div class="align-middle text-center text-sm">
+                <span>{{i.styleId}}</span>
+              </div>
+            </div>
+          </td>
+         
+          <td class="align-middle text-center text-sm">
+            <span>{{i.instType}}</span>
+          </td>
+          <td class="align-middle text-center text-sm">
+            <span>{{i.instContractFrom}}</span>
+          </td>
+          <td class="align-middle text-center">
+            <span class="text-secondary text-xs font-weight-bold">{{i.instContractTo}}</span>
+          </td>
+          <td class="align-middle text-center">
+            <span class="text-secondary text-xs font-weight-bold">{{i.status}}</span>
+          </td>
+          <td class="flexhoriz">
+            <button class="btn btn-primary align-middle" (click)="populateForm(i)" (click)="modalInstructorUpdate()">Update</button>
+            <br>
+            <button class="btn btn-primary align-middle" (click)="onDeleteInst(i.instId)">Delete</button>
+          </td>
+        </tr>
+    
+      </tbody>
+     
+    </table>
+   
+  </div>
+
+  <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="padding:7%;">
+            <!-- To add Instructor  -->
+            <div *ngIf="addInst">
+              <div class="modal-header">
+                  <h4 class="modal-title">Add Instructor</h4>
+  
+                  <button type="button" class="btn btn-primary btn-lg" aria-label="Close" (click)="onCloseHandled()"><span
+                          aria-hidden="true">&times;</span></button>
+              </div>
+              <form novalidate autocomplete="off" #form="ngForm" (submit)="insertInstructor(form)">
+                <input type="hidden" name="instId" [value]="service.formDataInst.instId" />
+                <div class="form-group">
+                    <label>Instructor Name</label>
+                    <input class="form-control form-control-lg" name="instname" 
+                    #instname="ngModel" [(ngModel)]="service.formDataInst.instFullName" required
+                    [class.invalid]="instname.invalid && instname.touched">
+                </div>
+                  <div class="form-group">
+                    <label>Style Name</label>
+                    <input class="form-control form-control-lg" name="styleId" 
+                    #styleId="ngModel" [(ngModel)]="service.formDataInst.styleId" required
+                    [class.invalid]="styleId.invalid && styleId.touched">
+                </div>
+                <div class="form-group">
+                    <label>Permanent/Freelance</label>
+                    <input class="form-control form-control-lg" name="insttype" 
+                    #insttype="ngModel" [(ngModel)]="service.formDataInst.instType" required
+                    [class.invalid]="insttype.invalid && insttype.touched">
+                </div>
+                <div class="form-group">
+                    <label>Contract Start Date</label>
+                    <input type="date" class="form-control form-control-lg" name="instcontractfrom" 
+                    #instcontractfrom="ngModel" [(ngModel)]="service.formDataInst.instContractFrom" required
+                    [class.invalid]="instcontractfrom.invalid && instcontractfrom.touched">
+                </div>
+            
+                  <div class="form-group">
+                    <label>Contract End Date</label>
+                    <input type="date" class="form-control form-control-lg" name="instcontractto" 
+                    #instcontractto="ngModel" [(ngModel)]="service.formDataInst.instContractTo" required
+                    [class.invalid]="instcontractto.invalid && instcontractto.touched">
+                </div>
+              <div class="form-group">
+                <label>Status</label>
+                <select class="form-control form-control-lg dropdown" #status="ngModel" name="status"
+                        [(ngModel)]="service.formDataInst.status" [class.invalid]="status.invalid && status.touched">
+                  <option [ngValue]="active">Active</option>
+                  <option [ngValue]="inactive">Inactive</option>
+                </select>
+                </div>
+                    <div class="form-group">
+                    <div class="modal-footer">
+                        <button class="btn btn-info btn-lg btn-block" type="submit">SUBMIT</button>
+                    </div>
+  
+                </div>
+            </form>
+          </div>
+            <!-- To update instructor Regular -->
+             <div *ngIf="updateInst">
+              <div class="modal-header">
+                  <h4 class="modal-title">Update Instructor</h4>
+  
+                  <button type="button" class="btn btn-primary btn-lg" aria-label="Close" (click)="onCloseHandled()"><span
+                          aria-hidden="true">&times;</span></button>
+              </div>
+              <form novalidate autocomplete="off" #form="ngForm" (submit)="updateInstructor(form)">
+                <input type="hidden" name="instId" [value]="service.formDataInst.instId" />
+                <div class="form-group">
+                    <label>Instructor Name</label>
+                    <input class="form-control form-control-lg" name="instname" 
+                    #instname="ngModel" [(ngModel)]="service.formDataInst.instFullName" required
+                    [class.invalid]="instname.invalid && instname.touched">
+                </div>
+                <div class="form-group">
+                    <label>Style Name</label>
+                    <select class="form-control form-control-lg dropdown" #styleId="ngModel" name="styleId"
+                            [(ngModel)]="service.formDataInst.styleId" [class.invalid]="styleId.invalid && styleId.touched">
+                      <option *ngFor="let s of service.listStyleInfo" [ngValue]="s.styleId">{{s.styleName}}</option>
+                    </select>
+                </div>
+               
+                <div class="form-group">
+                    <label>Permanent/Freelance</label>
+                    <input class="form-control form-control-lg" name="insttype" 
+                    #insttype="ngModel" [(ngModel)]="service.formDataInst.instType" required
+                    [class.invalid]="insttype.invalid && insttype.touched">
+                </div>
+                <div class="form-group">
+                    <label>Contract Start Date</label>
+                    <input type="date" class="form-control form-control-lg" name="instcontractfrom" 
+                    #instcontractfrom="ngModel" [(ngModel)]="service.formDataInst.instContractFrom" required
+                    [class.invalid]="instcontractfrom.invalid && instcontractfrom.touched">
+                </div>
+            
+                  <div class="form-group">
+                    <label>Contract End Date</label>
+                    <input type="date" class="form-control form-control-lg" name="instcontractto" 
+                    #instcontractto="ngModel" [(ngModel)]="service.formDataInst.instContractTo" required
+                    [class.invalid]="instcontractto.invalid && instcontractto.touched">
+                </div>
+              <div class="form-group">
+                <label>Status</label>
+                <select class="form-control form-control-lg dropdown" #status="ngModel" name="status"
+                        [(ngModel)]="service.formDataInst.status" [class.invalid]="status.invalid && status.touched">
+                  <option [ngValue]="active">Active</option>
+                  <option [ngValue]="inactive">Inactive</option>
+                </select>
+                </div>
+                    <div class="form-group">
+                    <div class="modal-footer">
+                        <button class="btn btn-info btn-lg btn-block" type="submit">SUBMIT</button>
+                    </div>
+  
+                </div>
+            </form>
+          </div>
+         
+        </div>
+    </div>
+   </div>
+</main>

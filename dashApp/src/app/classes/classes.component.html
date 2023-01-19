@@ -10,11 +10,11 @@
     </div>
     <div class="flexhoriz">
     <h2 class="marker marker-center">Regular</h2>
-    <button class="btn btn-primary" style="margin-left:68%;" (click)="modalStyleAdd()">Add Style</button>
-    <button class="btn btn-primary" style="margin-left:3%;" (click)="modalProgramAdd()">Add Program</button>
+    <button class="btn btn-primary" style="margin-left:68%;background-color:rgb(77, 77, 77);" (click)="modalStyleAdd()">Add Style</button>
+    <button class="btn btn-primary" style="margin-left:3%;background-color:#d63384;" (click)="modalProgramAdd()">Add Program</button>
   </div>
   <div class="row" *ngFor="let s of service.listStyleInfo;let i=index"> 
-    <button type="button" class="collapsible" (click)="onClickStyle(s.styleId,i)">{{s.styleName}}<span style="margin-left:60em">Click to expand</span></button>
+    <button type="button" class="collapsible" style="border-radius: 20px;background-color:rgb(224, 170, 61);" (click)="onClickStyle(s.styleId,i)">{{s.styleName}}<span style="margin-left:60em">Click to expand</span></button>
     <div *ngIf="up[i]">
       <div class="card-body px-0 pb-2">
         <div class="table-responsive p-0">
@@ -43,7 +43,7 @@
                       <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
                     </div> -->
                     <div class="d-flex flex-column justify-content-center">
-                      <h6 class="mb-0 text-sm">{{p.instructorName}}</h6>
+                      <h6 class="mb-0 text-sm">{{p.instId}}</h6>
                       <!-- <p class="text-xs text-secondary mb-0">john@creative-tim.com</p> -->
                     </div>
                   </div>
@@ -64,8 +64,9 @@
                   </a>
                 </td>
                 <td class="flexhoriz">
-                  <button class="btn btn-primary align-middle" (click)="populateFormProg(p)" (click)="modalProgramUpdate()">Update</button>
-                  <button class="btn btn-primary align-middle" (click)="onDeleteProg(p.programId)">Delete</button>
+                  <button class="btn btn-primary align-middle" style="background-color:#d63384;" (click)="populateFormProg(p)" (click)="modalProgramUpdate()">Update</button>
+                  <br>
+                  <button class="btn btn-primary align-middle" style="background-color:#d63384;" (click)="onDeleteProg(p.programId)">Delete</button>
                 </td>
               </tr>
           
@@ -78,13 +79,23 @@
     </div>
   </div>  
 </div>  
+<!-- CHARTS -->
+<div class="card">
+  <div class="container bg-gradient-secondary shadow-primary border-radius-lg py-3 pe-1">
+    <div class="row chart">
+      <div class="col-6"><canvas id="pie-chart" class="chart-canvas col-6" height="100px" width="100px"></canvas></div>
+      <div class="col-6"><h2>Regular Batches student count</h2><canvas id="bar-chart" class="chart-canvas col-6" height="200px"></canvas></div>
+    </div>
+  </div>
+</div>
+
 <div class="container-fluid py-4 card card-chart"> 
   <div class="flexhoriz">
   <h2 class="marker marker-center">Freelance</h2>
-  <button class="btn btn-primary" style="margin-left:78%;" (click)="modalStyleAdd()">Add Style</button>
+  <button class="btn btn-primary" style="margin-left:78%;background-color:#d63384;" (click)="modalStyleAdd()">Add Style</button>
 </div>
 <div class="row" *ngFor="let s of service.listStyleInfo;let i=index"> 
-  <button type="button" class="collapsible" (click)="onClickStyle(s.styleId,i)">{{s.styleName}}<span style="margin-left:60em">Click to expand</span></button>
+  <button type="button" class="collapsible" style="border-radius: 20px;background-color:rgb(224, 170, 61);" (click)="onClickStyle(s.styleId,i)">{{s.styleName}}<span style="margin-left:60em">Click to expand</span></button>
   <div *ngIf="up[i]">
     <div class="card-body px-0 pb-2">
       <div class="table-responsive p-0">
@@ -112,7 +123,7 @@
                     <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
                   </div> -->
                   <div class="d-flex flex-column justify-content-center">
-                    <h6 class="mb-0 text-sm">{{p.instructorName}}</h6>
+                    <h6 class="mb-0 text-sm">{{p.instId}}</h6>
                     <!-- <p class="text-xs text-secondary mb-0">john@creative-tim.com</p> -->
                   </div>
                 </div>
@@ -155,40 +166,6 @@
 </div>  
 </div> 
 
-
-
-  <div class="card mb-3">
-    <div class="card card-body p-3">
-      <div class="chart">
-        <canvas id="pie-chart" class="chart-canvas" height="400" width="2000"></canvas>
-        <canvas id="bar-chart" class="chart-canvas" height="100px"></canvas>
-      </div>
-    </div>
-  </div>
-  
-  <div class="card card-chart">
-    <div class="card-header card-header-icon card-header-danger">
-      <div class="card-icon">
-        <i class="material-icons">pie_chart</i>
-      </div>
-      <h4 class="card-title">Pie Chart</h4>
-    </div>
-    <div class="card-body">
-      <div id="chartPreferences" class="ct-chart"></div>
-    </div>
-    <div class="card-footer">
-      <div class="row">
-        <div class="col-md-12">
-          <h6 class="card-category">Legend</h6>
-        </div>
-        <div class="col-md-12">
-          <i class="fa fa-circle text-info"></i> Apple
-          <i class="fa fa-circle text-warning"></i> Samsung
-          <i class="fa fa-circle text-danger"></i> Windows Phone
-        </div>
-      </div>
-    </div>
-  </div>
 
 <!-- MODALS -->
 
@@ -252,31 +229,35 @@
               <input type="hidden" name="projId" [value]="service.formDataProg.programId" />
               <div class="form-group">
                 <label>Style Name</label>
-                <select type="number" class="form-control form-control-lg dropdown" [(ngModel)]="service.formDataProg">
-                  <option *ngFor="let s of service.listStyleInfo" value="s.styleId">{{s.styleName}}</option>
+                <select class="form-control form-control-lg dropdown" #styleId="ngModel" name="styleId"
+                        [(ngModel)]="service.formDataProg.styleId" [class.invalid]="styleId.invalid && styleId.touched">
+                  <option *ngFor="let s of service.listStyleInfo" [ngValue]="s.styleId">{{s.styleName}}</option>
                 </select>
+                </div>
+                <div class="form-group">
                   <label>Program Name</label>
-                  <input class="form-control form-control-lg" name="style" 
-                  #style="ngModel" [(ngModel)]="service.formDataProg.programName" required
-                  [class.invalid]="style.invalid && style.touched">
+                  <input class="form-control form-control-lg" name="progname" 
+                  #progname="ngModel" [(ngModel)]="service.formDataProg.programName" required
+                  [class.invalid]="progname.invalid && progname.touched">
               </div>
-              <div class="form-group">
-                <label>Instructor Name</label>
-                <input class="form-control form-control-lg" name="style" 
-                    #style="ngModel" [(ngModel)]="service.formDataProg.instructorName" required
-                    [class.invalid]="style.invalid && style.touched">
+                <div class="form-group">
+                  <label>Instructor Name</label>
+                  <select class="form-control form-control-lg dropdown" #instId="ngModel" name="instId"
+                          [(ngModel)]="service.formDataProg.instId" [class.invalid]="instId.invalid && instId.touched">
+                    <option *ngFor="let s of service.listpermInst" [ngValue]="s.instId">{{s.instFullName}}</option>
+                  </select>
                 </div>
                 <div class="form-group">
                   <label>Start Date</label>
-                  <input type="date" class="form-control form-control-lg" name="style" 
-                  #style="ngModel" [(ngModel)]="service.formDataProg.startDate" required
-                  [class.invalid]="style.invalid && style.touched">
+                  <input type="date" class="form-control form-control-lg" name="startd" 
+                  #startd="ngModel" [(ngModel)]="service.formDataProg.startDate" required
+                  [class.invalid]="startd.invalid && startd.touched">
               </div>
               <div class="form-group">
                 <label>End Date</label>
-                <input type="date" class="form-control form-control-lg" name="style" 
-                #style="ngModel" [(ngModel)]="service.formDataProg.endDate" required
-                [class.invalid]="style.invalid && style.touched">
+                <input type="date" class="form-control form-control-lg" name="endd" 
+                #endd="ngModel" [(ngModel)]="service.formDataProg.endDate" required
+                [class.invalid]="endd.invalid && endd.touched">
             </div>
             <div class="form-group">
               <label>Fees</label>
@@ -284,6 +265,14 @@
                 #fees="ngModel" [(ngModel)]="service.formDataProg.fees" required
                 [class.invalid]="fees.invalid && fees.touched">
             </div>
+            <div class="form-group">
+              <label>Status</label>
+              <select class="form-control form-control-lg dropdown" #status="ngModel" name="status"
+                      [(ngModel)]="service.formDataProg.status" [class.invalid]="status.invalid && status.touched">
+                <option [ngValue]="active">Active</option>
+                <option [ngValue]="inactive">Inactive</option>
+              </select>
+              </div>
                   <div class="form-group">
                   <div class="modal-footer">
                       <button class="btn btn-info btn-lg btn-block" type="submit">SUBMIT</button>
@@ -292,8 +281,7 @@
               </div>
           </form>
         </div>
-
-           <!-- To update Program Regular -->
+          <!-- To update Program Regular -->
            <div *ngIf="updateProgram">
             <div class="modal-header">
                 <h4 class="modal-title">Add Program</h4>
@@ -303,7 +291,13 @@
             </div>
             <form novalidate autocomplete="off" #form="ngForm" (submit)="updateProg(form)">
               <input type="hidden" name="projId" [value]="service.formDataProg.programId" />
-              
+              <div class="form-group">
+                <label>Style Name</label>
+                <select class="form-control form-control-lg dropdown" #styleId="ngModel" name="styleId"
+                        [(ngModel)]="service.formDataProg.styleId" [class.invalid]="styleId.invalid && styleId.touched">
+                  <option *ngFor="let s of service.listStyleInfo" [ngValue]="s.styleId">{{s.styleName}}</option>
+                </select>
+                </div>
                 <div class="form-group">
                   <label>Program Name</label>
                   <input class="form-control form-control-lg" name="progn" 
@@ -312,10 +306,11 @@
               </div>
               <div class="form-group">
                 <label>Instructor Name</label>
-                <input class="form-control form-control-lg" name="instname" 
-                    #instname="ngModel" [(ngModel)]="service.formDataProg.instructorName" required
-                    [class.invalid]="instname.invalid && instname.touched">
-                </div>
+                <select class="form-control form-control-lg dropdown" #instId="ngModel" name="instId"
+                        [(ngModel)]="service.formDataProg.instId" [class.invalid]="instId.invalid && instId.touched">
+                  <option *ngFor="let s of service.listpermInst" [ngValue]="s.instId">{{s.instFullName}}</option>
+                </select>
+              </div>
                 <div class="form-group">
                   <label>Start Date</label>
                   <input class="form-control form-control-lg" name="startd" 
@@ -334,6 +329,14 @@
                 #fees="ngModel" [(ngModel)]="service.formDataProg.fees" required
                 [class.invalid]="fees.invalid && fees.touched">
             </div>
+            <div class="form-group">
+              <label>Status</label>
+              <select class="form-control form-control-lg dropdown" #status="ngModel" name="status"
+                      [(ngModel)]="service.formDataProg.status" [class.invalid]="status.invalid && status.touched">
+                <option [ngValue]="active">Active</option>
+                <option [ngValue]="inactive">Inactive</option>
+              </select>
+              </div>
                   <div class="form-group">
                   <div class="modal-footer">
                       <button class="btn btn-info btn-lg btn-block" type="submit">SUBMIT</button>

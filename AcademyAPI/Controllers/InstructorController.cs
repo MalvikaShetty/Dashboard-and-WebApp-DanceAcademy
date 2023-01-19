@@ -57,5 +57,32 @@ namespace AcademyAPI.Controllers
             return CreatedAtAction("GetInstAll", new { name = inst.InstId }, inst);
         }
 
+        [HttpDelete("deleteinst/{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IEnumerable<InstructorInfo>>> DeleteInstructor(int id)
+        {
+            var instDel = await _context.instinfo.FindAsync(id);
+            if (instDel == null) return NotFound();
+
+            _context.instinfo.Remove(instDel);
+            await _context.SaveChangesAsync();
+            return NoContent();
+
+        }
+
+        [HttpPut("updateinst/{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> InstructorUpdate(int id, InstructorInfo inst)
+        {
+            if (id != inst.InstId) return BadRequest();
+
+            _context.Entry(inst).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
     }
 }

@@ -82,5 +82,45 @@ namespace AcademyAPI.Controllers
 
             return CreatedAtAction("GetStudentClass", new { id = studcls.StudentClId }, studcls);
         }
+        
+        [HttpDelete("deletestudent/{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IEnumerable<StudentInfo>>> DeleteStudent(int id)
+        {
+            var studDel = await _context.studinfo.FindAsync(id);
+            if (studDel == null) return NotFound();
+
+            _context.studinfo.Remove(studDel);
+            await _context.SaveChangesAsync();
+            return NoContent();
+
+        }
+
+        [HttpPut("updatestudent/{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> InstructorUpdate(int id, StudentInfo stud)
+        {
+            if (id != stud.StudentId) return BadRequest();
+
+            _context.Entry(stud).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpPut("updatestudentclass/{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> InstructorUpdate(int id, StudentClass studcls)
+        {
+            if (id != studcls.StudentClId) return BadRequest();
+
+            _context.Entry(studcls).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }

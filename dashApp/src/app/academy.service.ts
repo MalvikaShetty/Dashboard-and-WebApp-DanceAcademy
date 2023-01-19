@@ -49,6 +49,9 @@ export class AcademyService {
   formDataInst:InstructorInfo=new InstructorInfo();
   listInst: InstructorInfo[]=[];
 
+  formDataPermInst:InstructorInfo=new InstructorInfo();
+  listpermInst: InstructorInfo[]=[];
+
   formDataFreelanceInst:InstructorInfo=new InstructorInfo();
   listFreelanceInst: InstructorInfo[]=[];
 
@@ -130,17 +133,22 @@ export class AcademyService {
     }
 
     //INSTRUCTORS
-    
+
+    getInst(){
+      return this.http.get(this.instructbase+"/getinst").toPromise().then(res=> this.listInst = res as InstructorInfo[]);
+     
+    }
+
     getPermInstCount(){
       return this.http.get(this.instructbase+"/getperminstcount");
     }
-
+    
     getFreelanceInstCount(){
       return this.http.get(this.instructbase+"/getfreelanceinstcount");
     }
 
     getPermInst(){
-      return this.http.get(this.instructbase+"/getpermanentinst").toPromise().then(res=> this.listInst = res as InstructorInfo[]);
+      return this.http.get(this.instructbase+"/getpermanentinst").toPromise().then(res=> this.listpermInst = res as InstructorInfo[]);
      
     }
 
@@ -152,6 +160,15 @@ export class AcademyService {
     postInstDetails(inst:InstructorInfo): Observable<any>{
       return this.http.post<any>(this.instructbase+"/addinst", this.formDataInst);
     }
+
+    updateInstDetails(): Observable<any>{
+      return this.http.put<any>(this.instructbase+'/updateinst/'+ this.formDataInst.instId , this.formDataInst);
+    }
+  
+    deleteInstDetails(id:any): Observable<any>{
+      return this.http.delete<any>(this.instructbase+'/deleteint/'+ id);
+    }
+  
 
     //DASHBOARD GET VIEW PROGRAM INSTRUCTOR AND DAYS
 

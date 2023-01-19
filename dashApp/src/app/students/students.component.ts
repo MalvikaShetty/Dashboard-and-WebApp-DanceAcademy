@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AcademyService } from '../academy.service';
 
 @Component({
   selector: 'app-students',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StudentsComponent implements OnInit {
 
-  constructor() { }
+  constructor(public service:AcademyService) { }
 
   ngOnInit(): void {
+
+    this.service.getStyleDetails();
+    this.service.listStyleInfo; 
+    this.service.getPermInst();
+    this.service.listpermInst;
   }
 
+  modalStudentAdd(){
+    
+  }
 }

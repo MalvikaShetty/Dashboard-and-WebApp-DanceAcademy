@@ -1,1 +1,69 @@
-<p>students works!</p>
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+
+    <div class="text-center mb-5">
+        <h1 class="marker marker-center">Programs</h1>
+      </div>
+      <div class="flexhoriz">
+      <h2 class="marker marker-center">Regular</h2>
+      <!-- <button class="btn btn-primary" style="margin-left:68%;background-color:rgb(77, 77, 77);" (click)="modalStyleAdd()">Add Style</button> -->
+      <button class="btn btn-primary" style="margin-left:3%;background-color:#d63384;" (click)="modalStudentAdd()">Add Program</button>
+    </div>
+    <div class="table-responsive p-0">
+              
+        <table class="table align-items-center mb-0">
+          <thead>
+            <tr>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Program Name</th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Instructor Name</th>
+              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Start Date</th>
+              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">End Date</th>
+              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fees</th>
+              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">About the program</th>
+              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let p of service.listProg">
+            <tr>
+              <td>
+                <h4 class="text-xs font-weight-bold mb-0">{{p.programName}}</h4>
+                <!-- <p class="text-xs text-secondary mb-0">Organization</p> -->
+              </td>
+              <td>
+                <div class="d-flex px-2 py-1">
+                  <!-- <div>
+                    <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                  </div> -->
+                  <div class="d-flex flex-column justify-content-center">
+                    <h6 class="mb-0 text-sm">{{p.instId}}</h6>
+                    <!-- <p class="text-xs text-secondary mb-0">john@creative-tim.com</p> -->
+                  </div>
+                </div>
+              </td>
+             
+              <td class="align-middle text-center text-sm">
+                <span class="badge badge-sm bg-gradient-success">{{p.startDate}}</span>
+              </td>
+              <td class="align-middle text-center text-sm">
+                <span class="badge badge-sm bg-gradient-success">{{p.endDate}}</span>
+              </td>
+              <td class="align-middle text-center">
+                <span class="text-secondary text-xs font-weight-bold">{{p.fees}}</span>
+              </td>
+              <td class="align-middle text-center">
+                <a class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                  Click to know more
+                </a>
+              </td>
+              <!-- <td class="flexhoriz">
+                <button class="btn btn-primary align-middle" (click)="populateFormProg(p)" (click)="modalProgramUpdate()">Update</button>
+                <br>
+                <button class="btn btn-primary align-middle" (click)="onDeleteProg(p.programId)">Delete</button>
+              </td> -->
+            </tr>
+        
+          </tbody>
+         
+        </table>
+       
+      </div>
+    </main>

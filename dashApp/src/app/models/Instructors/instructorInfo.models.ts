@@ -1,7 +1,7 @@
 export class InstructorInfo {
     instId?:number;
     instFullName:string='';
-    StyleId?:number;
+    styleId?:number;
     instType:string='';
     instContractFrom?:Date;
     instContractTo?:Date;

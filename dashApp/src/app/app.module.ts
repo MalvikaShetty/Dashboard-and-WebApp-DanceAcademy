@@ -8,6 +8,7 @@ import { StudentsComponent } from './students/students.component';
 import { ClassesComponent } from './classes/classes.component';
 import { InstAndStaffComponent } from './inst-and-staff/inst-and-staff.component';
 import { FormsModule } from '@angular/forms';
+import { InstructorsComponent } from './instructors/instructors.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { FormsModule } from '@angular/forms';
     DashComponent,
     StudentsComponent,
     ClassesComponent,
-    InstAndStaffComponent
+    InstAndStaffComponent,
+    InstructorsComponent
   ],
   imports: [
     BrowserModule,

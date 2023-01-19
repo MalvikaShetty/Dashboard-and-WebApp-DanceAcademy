@@ -27,64 +27,147 @@ export class ClassesComponent implements OnInit {
   updateProgram=false;
   delProgram=false;
   valueStyleId=0;
+  active = "Active";
+  inactive = "Inactive";
  
 
   ngOnInit(): void {
     
     this.service.getStyleDetails();
     this.service.listStyleInfo; 
+    this.service.getPermInst();
+    this.service.listpermInst;
+    this.RenderChart("bar","Students","bar-chart");
+    this.RenderPie("pie","Students","pie-chart");
 
-    var regData = {
-      labels: [
+
+}
+
+RenderChart(type:any,label:any,id:any){
+  const myChart = new Chart(id, {
+    type: type,
+    data: {
+      labels:[
         'Red', 'Orange', 'Yellow', 'Green', 'Blue'
       ],
-      datasets: [
-          {
-              data: [133.3, 86.2, 52.2, 51.2, 50.2],
-              backgroundColor: [
-                  "#FF6384",
-                  "#63FF84",
-                  "#84FF63",
-                  "#8463FF",
-                  "#6384FF"
-              ]
-          }]
-  };
-  
-  const barChart = new Chart( "bar-chart", {
-    type: 'line',
-    data: regData
+      datasets: [{
+        label: label,
+        tension: 0,
+        borderWidth: 0,
+        pointRadius: 5,
+        pointBackgroundColor: "rgba(255, 255, 255, .8)",
+        pointBorderColor: "transparent",
+        borderColor: "rgba(255, 255, 255, .8)",
+        // borderColor: "rgba(255, 255, 255, .8)",
+        // borderWidth: 4,
+        // backgroundColor: "transparent",
+        fill: true,
+        data: [133.3, 86.2, 52.2, 51.2, 50.2],
+        // maxBarThickness: 6
+
+      }],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          display: false,
+        }
+      },
+      interaction: {
+        intersect: false,
+        mode: 'index',
+      },
+      scales: {
+        y: {
+          grid: {
+            drawBorder: false,
+            display: true,
+            drawOnChartArea: true,
+            drawTicks: false,
+            borderDash: [5, 5],
+            color: 'rgba(255, 255, 255, .2)'
+          },
+          ticks: {
+            display: true,
+            color: '#fff',
+            padding: 10,
+            font: {
+              size: 14,
+              weight: 300,
+              family: "Roboto",
+              style: 'normal',
+              lineHeight: 2
+            },
+          }
+        },
+        x: {
+          grid: {
+       
+            display: false,
+            drawOnChartArea: false,
+            drawTicks: false,
+            // borderDash: [5, 5]
+          },
+          ticks: {
+            display: true,
+            color: '#f8f9fa',
+            padding: 10,
+            font: {
+              size: 14,
+              // weight: 300,
+              family: "Roboto",
+              style: 'normal',
+              lineHeight: 2
+            },
+          }
+        },
+      },
+    },
   });
+  // myChart.update();
+  
+}
 
-
-  var oilData = {
-    labels: [
+RenderPie(type:any,label:any,id:any){
+  const Data = {
+    labels:  [
       'Red', 'Orange', 'Yellow', 'Green', 'Blue'
     ],
     datasets: [
         {
-            data: [133.3, 86.2, 52.2, 51.2, 50.2],
+            data:  [133.3, 86.2, 52.2, 51.2, 50.2],
+            label:label,
             backgroundColor: [
-                "#FF6384",
-                "#63FF84",
-                "#84FF63",
+                "#92d1a3",
+                "#4aba69",
+                "#209e43",
                 "#8463FF",
                 "#6384FF"
             ]
         }]
 };
 
-const pieChart = new Chart( "pie-chart", {
-  type: 'pie',
-  data: oilData,
+const pieChart = new Chart( id, {
+  type: type,
+  data: Data,
   options: {
-    responsive: false,
-    maintainAspectRatio: false,
-}
-});
-
-
+    responsive: true,
+    maintainAspectRatio: true,
+    plugins: {
+      legend: {
+          display: true,
+          labels: {
+              color: 'rgb(255, 255, 255)'
+          }
+      }
+    },
   }
+
+});
+}
+
 
   takeStyleId(id:any){
     return this.valueStyleId=id;
@@ -153,11 +236,10 @@ const pieChart = new Chart( "pie-chart", {
   }
 
   insertProgram(form:NgForm){
-    this.service.formDataProg.styleId==this.valueStyleId;
     this.service.postProgDetails(this.service.formDataProg)
     .subscribe(
       (res: any) => {
-        alert("Yay entry added")
+        alert("Yay program added")
         console.log(res);
         }, //Bind to view
       (err: any) => {
