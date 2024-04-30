@@ -7,6 +7,7 @@ import { AcademyService } from '../academy.service';
 import { NgForm } from '@angular/forms';
 import { Programs } from '../models/Classes/programs.models';
 import { StyleInfo } from '../models/Classes/styleInfo.models';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-classes',
@@ -15,7 +16,7 @@ import { StyleInfo } from '../models/Classes/styleInfo.models';
 })
 export class ClassesComponent implements OnInit {
 
-  constructor(public service:AcademyService) { }
+  constructor(public service:AcademyService, private router: Router) { }
 
   display = "none";
   up:boolean[]=[];
@@ -29,6 +30,7 @@ export class ClassesComponent implements OnInit {
   valueStyleId=0;
   active = "Active";
   inactive = "Inactive";
+  selectedProgramId?: number;
  
 
   ngOnInit(): void {
@@ -37,136 +39,10 @@ export class ClassesComponent implements OnInit {
     this.service.listStyleInfo; 
     this.service.getPermInst();
     this.service.listpermInst;
-    this.RenderChart("bar","Students","bar-chart");
-    this.RenderPie("pie","Students","pie-chart");
-
-
+    this.service.getFreelanceInst();
+    this.service.listFreelanceInst;
 }
 
-RenderChart(type:any,label:any,id:any){
-  const myChart = new Chart(id, {
-    type: type,
-    data: {
-      labels:[
-        'Red', 'Orange', 'Yellow', 'Green', 'Blue'
-      ],
-      datasets: [{
-        label: label,
-        tension: 0,
-        borderWidth: 0,
-        pointRadius: 5,
-        pointBackgroundColor: "rgba(255, 255, 255, .8)",
-        pointBorderColor: "transparent",
-        borderColor: "rgba(255, 255, 255, .8)",
-        // borderColor: "rgba(255, 255, 255, .8)",
-        // borderWidth: 4,
-        // backgroundColor: "transparent",
-        fill: true,
-        data: [133.3, 86.2, 52.2, 51.2, 50.2],
-        // maxBarThickness: 6
-
-      }],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: true,
-      plugins: {
-        legend: {
-          display: false,
-        }
-      },
-      interaction: {
-        intersect: false,
-        mode: 'index',
-      },
-      scales: {
-        y: {
-          grid: {
-            drawBorder: false,
-            display: true,
-            drawOnChartArea: true,
-            drawTicks: false,
-            borderDash: [5, 5],
-            color: 'rgba(255, 255, 255, .2)'
-          },
-          ticks: {
-            display: true,
-            color: '#fff',
-            padding: 10,
-            font: {
-              size: 14,
-              weight: 300,
-              family: "Roboto",
-              style: 'normal',
-              lineHeight: 2
-            },
-          }
-        },
-        x: {
-          grid: {
-       
-            display: false,
-            drawOnChartArea: false,
-            drawTicks: false,
-            // borderDash: [5, 5]
-          },
-          ticks: {
-            display: true,
-            color: '#f8f9fa',
-            padding: 10,
-            font: {
-              size: 14,
-              // weight: 300,
-              family: "Roboto",
-              style: 'normal',
-              lineHeight: 2
-            },
-          }
-        },
-      },
-    },
-  });
-  // myChart.update();
-  
-}
-
-RenderPie(type:any,label:any,id:any){
-  const Data = {
-    labels:  [
-      'Red', 'Orange', 'Yellow', 'Green', 'Blue'
-    ],
-    datasets: [
-        {
-            data:  [133.3, 86.2, 52.2, 51.2, 50.2],
-            label:label,
-            backgroundColor: [
-                "#92d1a3",
-                "#4aba69",
-                "#209e43",
-                "#8463FF",
-                "#6384FF"
-            ]
-        }]
-};
-
-const pieChart = new Chart( id, {
-  type: type,
-  data: Data,
-  options: {
-    responsive: true,
-    maintainAspectRatio: true,
-    plugins: {
-      legend: {
-          display: true,
-          labels: {
-              color: 'rgb(255, 255, 255)'
-          }
-      }
-    },
-  }
-
-});
-}
 
 
   takeStyleId(id:any){
@@ -198,11 +74,13 @@ const pieChart = new Chart( id, {
     this.service.listProg;
   }
 
-  onClickPD(progName:any){
+  onClickPD(progId:any){
     this.expandProgram = true;
     this.display = "block";
-    this.service.getProgDays(progName);
+    this.service.getProgDays(progId);
+    console.log(progId, "progName")
     this.service.listProgDays;
+    console.log(this.service.listProgDays, "this.service.listProgDays")
   }
 
   // ADD STYLE
@@ -294,6 +172,28 @@ onDeleteProg(id:any){
 }
 
 
+navigateToPayment(programId: any): void {
+  // Find the program object in listProg that matches the specified programId
+  const selectedProgram = this.service.listProg.find(program => program.programId === programId);
+
+  if (selectedProgram) {
+    // Extract the fees from the selected program
+    const fees = selectedProgram.fees;
+    // Construct the navigation extras object with custom properties (programId and fees)
+    const navigationExtras: NavigationExtras = {
+      state: {
+        studentId: 1,
+        programId: programId,
+        fees: fees
+      }
+    };
+
+    // Navigate to the PaymentFeesComponent with the custom navigation extras
+    this.router.navigate(['/paymentfees'], navigationExtras);
+  } else {
+    console.log(`Program not found with programId ${programId}`);
+  }
+}
 
   //ADD PROGRAM DAYS
  

@@ -36,3 +36,12 @@
    flex-direction: row;
    justify-content: space-around;
   }
+
+/* Define arrow icons */
+.arrow-up::after {
+  content: '\25B2'; /* Unicode for upward arrow */
+}
+
+.arrow-down::after {
+  content: '\25BC'; /* Unicode for downward arrow */
+}

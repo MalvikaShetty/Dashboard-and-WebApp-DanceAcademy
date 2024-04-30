@@ -17,7 +17,8 @@ export class AcademyService {
 
   constructor(private http:HttpClient) { }
 
-  readonly classbase="https://danceacademyapi.azurewebsites.net/api/Classes"
+  // readonly classbase="https://academyapi20230120111324.azurewebsites.net/api/Classes"
+  readonly classbase="https://localhost:44316/api/Classes"
   formDataStyle:StyleInfo=new StyleInfo();
   listStyleInfo: StyleInfo[]=[];
 
@@ -32,7 +33,8 @@ export class AcademyService {
 
   listProgInstDaysView: any[]=[];
   
-  readonly studentbase="https://danceacademyapi.azurewebsites.net/api/Students"
+  // readonly studentbase="https://academyapi20230120111324.azurewebsites.net/api/Students"
+  readonly studentbase ="https://localhost:44316/api/Students"
   formDataStudentInfo:StudentInfo=new StudentInfo();
   listStudentInfo: StudentInfo[]=[];
 
@@ -45,7 +47,8 @@ export class AcademyService {
   formDataStudentCount:StudentInfo=new StudentInfo();
   listStudentCount: StudentInfo[]=[];
 
-  readonly instructbase="https://danceacademyapi.azurewebsites.net/api/instructor"
+  // readonly instructbase="https://academyapi20230120111324.azurewebsites.net/api/instructor"
+  readonly instructbase= "https://localhost:44316/api/instructor"
   formDataInst:InstructorInfo=new InstructorInfo();
   listInst: InstructorInfo[]=[];
 
@@ -97,8 +100,8 @@ export class AcademyService {
       return this.http.post<any>(this.classbase+"/addprogday", this.formDataProgDays);
     }
   
-    getProgDays(progName:any){
-      this.http.get(this.classbase+"/getprogday/"+ progName).toPromise().then(res=> this.listProgDays = res as ProgramDays[]);
+    getProgDays(progId:any){
+      this.http.get(this.classbase+"/getprogday/"+ progId).toPromise().then(res=> this.listProgDays = res as ProgramDays[]);
      
     }
 

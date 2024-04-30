@@ -6,5 +6,8 @@ export class Programs {
     startDate?:Date;
     endDate?:Date;
     fees?:number;
+    maxCount?:number;
+    aboutProgram?:string;
+    pricePerPerson?:number;
     status:string='';
 } 

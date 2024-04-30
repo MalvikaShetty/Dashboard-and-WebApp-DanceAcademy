@@ -14,7 +14,10 @@
     <button class="btn btn-primary" style="margin-left:3%;background-color:#d63384;" (click)="modalProgramAdd()">Add Program</button>
   </div>
   <div class="row" *ngFor="let s of service.listStyleInfo;let i=index"> 
-    <button type="button" class="collapsible" style="border-radius: 20px;background-color:rgb(224, 170, 61);" (click)="onClickStyle(s.styleId,i)">{{s.styleName}}<span style="margin-left:60em">Click to expand</span></button>
+    <button type="button" class="collapsible" style="border-radius: 20px; background-color: rgb(224, 170, 61);" (click)="onClickStyle(s.styleId, i)">
+      {{ s.styleName }}
+      <span [ngClass]="{ 'arrow-up': up[i], 'arrow-down': !up[i] }" style="margin-left: 10px;"></span>
+    </button>    
     <div *ngIf="up[i]">
       <div class="card-body px-0 pb-2">
         <div class="table-responsive p-0">
@@ -48,7 +51,6 @@
                     </div>
                   </div>
                 </td>
-               
                 <td class="align-middle text-center text-sm">
                   <span class="badge badge-sm bg-gradient-success">{{p.startDate}}</span>
                 </td>
@@ -58,7 +60,7 @@
                 <td class="align-middle text-center">
                   <span class="text-secondary text-xs font-weight-bold">{{p.fees}}</span>
                 </td>
-                <td class="align-middle text-center" (click)="onClickPD(p.programName)">
+                <td class="align-middle text-center" (click)="onClickPD(p.programId)">
                   <a class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                     Click to know more
                   </a>
@@ -69,102 +71,13 @@
                   <button class="btn btn-primary align-middle" style="background-color:#d63384;" (click)="onDeleteProg(p.programId)">Delete</button>
                 </td>
               </tr>
-          
             </tbody>
-           
           </table>
-         
         </div>
       </div>
     </div>
   </div>  
 </div>  
-<!-- CHARTS -->
-<div class="card">
-  <div class="container shadow-primary border-radius-lg py-3 pe-1" style="background-color:darkkhaki;">
-    <div class="row chart">
-      <div class="col-6"><canvas id="pie-chart" class="chart-canvas col-6" height="100px" width="100px"></canvas></div>
-      <div class="col-6"><h2>Regular Batches student count</h2><canvas id="bar-chart" class="chart-canvas col-6" height="200px"></canvas></div>
-    </div>
-  </div>
-</div>
-
-<div class="container-fluid py-4 card card-chart"> 
-  <div class="flexhoriz">
-  <h2 class="marker marker-center">Freelance</h2>
-  <button class="btn btn-primary" style="margin-left:78%;background-color:#d63384;" (click)="modalStyleAdd()">Add Style</button>
-</div>
-<div class="row" *ngFor="let s of service.listStyleInfo;let i=index"> 
-  <button type="button" class="collapsible" style="border-radius: 20px;background-color:rgb(224, 170, 61);" (click)="onClickStyle(s.styleId,i)">{{s.styleName}}<span style="margin-left:60em">Click to expand</span></button>
-  <div *ngIf="up[i]">
-    <div class="card-body px-0 pb-2">
-      <div class="table-responsive p-0">
-        <table class="table align-items-center mb-0">
-          <thead>
-            <tr>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Program Name</th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Instructor Name</th>
-              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Start Date</th>
-              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">End Date</th>
-              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fees</th>
-              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">About the program</th>
-              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
-            </tr>
-          </thead>
-          <tbody *ngFor="let p of service.listProg">
-            <tr>
-              <td>
-                <h4 class="text-xs font-weight-bold mb-0">{{p.programName}}</h4>
-                <!-- <p class="text-xs text-secondary mb-0">Organization</p> -->
-              </td>
-              <td>
-                <div class="d-flex px-2 py-1">
-                  <!-- <div>
-                    <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
-                  </div> -->
-                  <div class="d-flex flex-column justify-content-center">
-                    <h6 class="mb-0 text-sm">{{p.instId}}</h6>
-                    <!-- <p class="text-xs text-secondary mb-0">john@creative-tim.com</p> -->
-                  </div>
-                </div>
-              </td>
-             
-              <td class="align-middle text-center text-sm">
-                <span class="badge badge-sm bg-gradient-success">{{p.startDate}}</span>
-              </td>
-              <td class="align-middle text-center text-sm">
-                <span class="badge badge-sm bg-gradient-success">{{p.endDate}}</span>
-              </td>
-              <td class="align-middle text-center">
-                <span class="text-secondary text-xs font-weight-bold">{{p.fees}}</span>
-              </td>
-              <td class="align-middle text-center" (click)="onClickPD(p.programName)">
-                <a class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                  Click to know more
-                </a>
-              </td>
-              <td>
-                <button class="btn btn-primary align-middle" (click)="modalProgramUpdate()">Update Program</button>
-              </td>
-            </tr>
-        
-          </tbody>
-         
-        </table>
-       
-      </div>
-    </div>
-    <!-- <div *ngFor="let p of service.listProg">
-      <p  (click)="onClickPD(p.programId)">{{p.progName}}, {{p.instructorName}}, {{p.startDate}}, </p>
-      <div *ngIf="expandProgram">
-        <div  *ngFor="let pd of service.listProgDays">
-          <p>{{pd.day}}, {{pd.startTime}} - </p><p>{{pd.endTime}}</p>
-        </div> 
-      </div>
-    </div> -->
-  </div>
-</div>  
-</div> 
 
 
 <!-- MODALS -->
@@ -187,9 +100,10 @@
                       <div class="card-body" *ngFor="let pd of service.listProgDays">
                         <h4>{{pd.programName}}</h4>
                         <p class="card-text">{{pd.day}}: {{pd.startTime}} - {{pd.endTime}}</p>
-                      </div>
+                      
                       <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                      <a href="#" class="btn btn-primary bg-dark">Go somewhere</a>
+                      <button (click)="navigateToPayment(pd.programId)" class="btn btn-primary bg-dark">Register Now!</button>
+                    </div>
                     </div>
                   </div>
           </div>
@@ -241,10 +155,17 @@
                   [class.invalid]="progname.invalid && progname.touched">
               </div>
                 <div class="form-group">
-                  <label>Instructor Name</label>
+                  <label>Instructor Name Permanent/Freelance</label>
                   <select class="form-control form-control-lg dropdown" #instId="ngModel" name="instId"
                           [(ngModel)]="service.formDataProg.instId" [class.invalid]="instId.invalid && instId.touched">
                     <option *ngFor="let s of service.listpermInst" [ngValue]="s.instId">{{s.instFullName}}</option>
+                  </select>
+                </div>
+                OR
+                <div class="form-group">
+                  <select class="form-control form-control-lg dropdown" #instId="ngModel" name="instId"
+                          [(ngModel)]="service.formDataProg.instId" [class.invalid]="instId.invalid && instId.touched">
+                    <option *ngFor="let s of service.listFreelanceInst" [ngValue]="s.instId">{{s.instFullName}}</option>
                   </select>
                 </div>
                 <div class="form-group">

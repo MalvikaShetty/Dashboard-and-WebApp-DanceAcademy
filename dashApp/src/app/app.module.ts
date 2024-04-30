@@ -9,6 +9,9 @@ import { ClassesComponent } from './classes/classes.component';
 import { InstAndStaffComponent } from './inst-and-staff/inst-and-staff.component';
 import { FormsModule } from '@angular/forms';
 import { SearchfilterPipe } from './searchfilter.pipe';
+import { PaymentFormComponent } from './payment-form/payment-form.component';
+import { NgxStripeModule } from 'ngx-stripe';
+import { environment } from 'src/environments/environment';
 
 
 @NgModule({
@@ -18,14 +21,15 @@ import { SearchfilterPipe } from './searchfilter.pipe';
     StudentsComponent,
     ClassesComponent,
     InstAndStaffComponent,
-    SearchfilterPipe
+    SearchfilterPipe,
+    PaymentFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    
+    NgxStripeModule.forRoot(environment.STRIPE_KEY),
   ],
   providers: [],
   bootstrap: [AppComponent]
