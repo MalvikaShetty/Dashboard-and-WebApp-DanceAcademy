@@ -1,5 +1,6 @@
 using AcademyAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,9 +20,14 @@ builder.Services.AddCors((options) =>
         options.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
     });
 });
+
+// Configure Stripe
+StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+//Change to !app.Environment.IsDev for pushing on server
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

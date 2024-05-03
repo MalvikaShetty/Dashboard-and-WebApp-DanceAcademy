@@ -13,6 +13,8 @@ namespace AcademyAPI.Models.Classes
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int Fees { get; set; }
+        public int? MaxCapacity { get; set; }
+        public string? AboutProgram { get; set;}
         public string Status { get; set; } //Active inactive
     }
 }

@@ -1,4 +1,60 @@
-.card-details {
-    margin-top: 20px;
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2, h4 {
+    color: #333;
+  }
+  
+  .user-info, .program-info, .payment-summary {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.5;
+  }
+  
+  .btn-primary {
+    background-color: #0056b3;
+    border: none;
+    padding: 10px 20px;
+  }
+  
+  .btn-secondary {
+    background-color: #6c757d;
+    border: none;
+    padding: 10px 20px;
+  }
+  
+  .btn-lg {
+    padding: 10px 30px;
+    font-size: 18px;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .shadow-sm {
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+  }
+  
+  .bg-white {
+    background-color: #fff!important;
+  }
+  
+  .rounded {
+    border-radius: .25rem!important;
   }
   

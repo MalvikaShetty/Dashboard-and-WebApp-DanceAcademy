@@ -29,7 +29,7 @@ import { environment } from 'src/environments/environment';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    NgxStripeModule.forRoot(environment.STRIPE_KEY),
+    // NgxStripeModule.forRoot(environment.STRIPE_KEY),
   ],
   providers: [],
   bootstrap: [AppComponent]

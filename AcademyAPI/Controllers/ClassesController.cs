@@ -95,14 +95,14 @@ namespace AcademyAPI.Controllers
         }
 
         //get specific programs based on programName
-        [HttpGet("getprogday/{name}")]
+        [HttpGet("getprogday/{id}")]
         public async Task<ActionResult<IEnumerable<ProgramDays>>> GetProgramDaysByName(int id)
         {
             return await _context.progdays.Where(t => t.ProgramId == id).ToListAsync();
         }
 
 
-        [HttpPost("addprogdaay")]
+        [HttpPost("addprogday")]
         public async Task<ActionResult<ProgramDays>> PostProgramDays(ProgramDays progdays)
         {
             _context.progdays.Add(progdays);

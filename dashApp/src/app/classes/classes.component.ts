@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 // import { pipe } from 'rxjs';
 // import {Chart} from 'node_modules/chart.js'
-import Chart from 'chart.js/auto';
+// import Chart from 'chart.js/auto';
 import { collapsibleCard } from 'src/assets/js/main.js'
 import { AcademyService } from '../academy.service';
 import { NgForm } from '@angular/forms';

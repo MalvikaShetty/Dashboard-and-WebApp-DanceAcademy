@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using AcademyAPI.Models;
 using AcademyAPI.Models.Classes;
+using Microsoft.Data.SqlClient;
+using AcademyAPI.StoredProcedures;
 
 namespace AcademyAPI.Controllers
 {
@@ -11,6 +13,7 @@ namespace AcademyAPI.Controllers
     public class StudentsController : Controller
     {
         private readonly AcademyDbContext _context;
+        
         public StudentsController(AcademyDbContext context)
         {
             _context = context;
@@ -74,15 +77,42 @@ namespace AcademyAPI.Controllers
             return CreatedAtAction("GetStudents", new { id = stud.StudentId }, stud);
         }
 
-        [HttpPost("addstudentclass")]
+        /*[HttpPost("addstudentclass")]
         public async Task<ActionResult<StudentClass>> PostStudentClass(StudentClass studcls)
         {
             _context.studclass.Add(studcls);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetStudentClass", new { id = studcls.StudentClId }, studcls);
+        }*/
+
+        [HttpPost("addstudentclass")]
+        public async Task<ActionResult<StudentClass>> PostStudentClass(StudentClass studcls)
+        {
+            try
+            {
+                var capacityChecker = new ProgramCapacityCheckAndAdd(_context);
+
+                // Check program capacity
+                bool isCapacityFull = await capacityChecker.CheckProgramCapacityAndAdd(studcls.ProgramId, studcls.StudentId);
+
+                if (!isCapacityFull)
+                {
+                    return CreatedAtAction("GetStudentClass", new { id = studcls.StudentClId }, studcls);
+                }
+                else
+                {
+                    // Program is at full capacity
+                    return BadRequest("Cannot register student. Program is at full capacity.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+/*                return StatusCode(500, $"An error occurred: {ex.Message}");*/
+            }
         }
-        
+
         [HttpDelete("deletestudent/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

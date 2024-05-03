@@ -1,5 +1,6 @@
 export class StudentClasses {
     studentId?:number;
     programId?:number;
-    feesPaid?:number;
+    feeAmount?:number;
+    feesPaid: boolean = false; 
 } 

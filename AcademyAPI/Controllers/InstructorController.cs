@@ -24,6 +24,18 @@ namespace AcademyAPI.Controllers
             return await _context.instinfo.ToListAsync();
         }
 
+        [HttpGet("getinstwithstylenames")]
+        public async Task<object> GetInstAllWithStyleNames()
+        {
+            var query = (from i in _context.instinfo
+                         join s in _context.styleinfo on i.StyleId equals s.StyleId
+                         select new
+                         { i.InstFullName, i.InstType, i.InstContractFrom,i.InstContractTo, i.Status , s.StyleName}).ToListAsync();
+            /* var count = await _context.studinfo.GroupBy(x => new { x.RegDate.Date.Year, x.RegDate.Date.Month }).ToListAsync();*/
+            return await query;
+        }
+
+
         [HttpGet("getpermanentinst")]
         public async Task<ActionResult<IEnumerable<InstructorInfo>>> GetPermanentInst()
         {

@@ -41,6 +41,10 @@ namespace AcademyAPI.Migrations
                     b.Property<int>("ProgramId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ProgramName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("StartTime")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -58,6 +62,9 @@ namespace AcademyAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProgramId"));
 
+                    b.Property<string>("AboutProgram")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
@@ -65,6 +72,9 @@ namespace AcademyAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("InstId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MaxCapacity")
                         .HasColumnType("int");
 
                     b.Property<string>("ProgramName")
@@ -84,6 +94,36 @@ namespace AcademyAPI.Migrations
                     b.HasKey("ProgramId");
 
                     b.ToTable("programs");
+                });
+
+            modelBuilder.Entity("AcademyAPI.Models.Financials.Payment", b =>
+                {
+                    b.Property<int>("PaymentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentId"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PaymentIntentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PaymentId");
+
+                    b.ToTable("payments");
                 });
 
             modelBuilder.Entity("AcademyAPI.Models.InstructorInfo", b =>
@@ -158,6 +198,12 @@ namespace AcademyAPI.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentClId"));
+
+                    b.Property<int?>("FeeAmount")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("FeesPaid")
+                        .HasColumnType("bit");
 
                     b.Property<int>("ProgramId")
                         .HasColumnType("int");

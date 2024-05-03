@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAdZU0g7o/k0Ku+KNgouTVpgAAAAACAAAAAAAQZgAAAAEAACAAAAC3T8m100TJDV1+86bz4yDe8l5xeCCO3pQtruXMZ5bY6QAAAAAOgAAAAAIAACAAAAB4wHU6tZOQ7AxFWH6SiejiPBXaynJrZIyM5lDrA5zXKYAAAAASIuQpj4tHPTL3X4YNPzKdt8Lk2v65c0bXFG6q0kyd/lHfnqEyUHqpouV1ERHyIe6EkvNgfDGmedk7Tp/7TSSaj8OlwphjchCO8hiC05hHcsRMFB8pTywDwaRpPWvaFnNlnU6fvBLPPsnda1ix7ov78h2+71fj9UnWpswHIDkMK0AAAADKofdKnKxYHLTP4GRk2x563MtJ05TELeTPjM7Hm8vt9T1tDnaclo4epkX0JHZbF1EF3ZFWLUjgAQq1L3Kh2h+h</EncryptedPassword>
+    <History>True|2023-01-20T16:27:23.0392300Z;</History>
+  </PropertyGroup>
+  <ItemGroup>
+    <EFMigrations Include="AcademyAPI.Models.AcademyDbContext">
+      <Value>Data Source=tcp:academyapidbserverr.database.windows.net,1433%3bInitial Catalog=AcademyAPI_db%3bUser Id=malvika%40academyapidbserverr%3bPassword=Shetty%40123</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>

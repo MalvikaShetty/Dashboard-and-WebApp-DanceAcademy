@@ -1,5 +1,42 @@
-<div class="card-details">
-    <div #cardInfo></div> <!-- Card element will be mounted here -->
-    <button (click)="pay()">Pay</button>
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Receipt</h2>
+  
+    <!-- User Information -->
+    <div class="user-info mb-4 shadow-sm p-3 bg-white rounded">
+      <h4>User Information</h4>
+      <p><strong>Name:</strong> John Doe</p>
+      <p><strong>Email:</strong> johndoeexample.com</p> <!-- Corrected email -->
+      <p><strong>Address:</strong> 123 Main St, Cityville, 12345</p>
+    </div>
+  
+    <!-- Program Information -->
+    <div class="program-info mb-4 shadow-sm p-3 bg-white rounded">
+      <h4>Program Details</h4>
+      <p><strong>Program Name:</strong> Hip Hop</p>
+      <p><strong>Start Date:</strong> January 16, 2023</p>
+      <p><strong>End Date:</strong> February 16, 2023</p>
+      <p><strong>Fees:</strong> {{ fees | currency:'USD':'symbol':'1.2-2' }}</p>
+    </div>
+  
+    <!-- Payment Summary -->
+    <div class="payment-summary mb-4 shadow-sm p-3 bg-white rounded">
+      <h4>Payment Summary</h4>
+      <p><strong>Total Amount:</strong> {{ fees | currency:'USD':'symbol':'1.2-2' }}</p>
+    </div>
+  
+    <!-- Proceed to Payment Button -->
+    <div class="text-center mb-4">
+      <button type="button" class="btn btn-primary btn-lg" (click)="togglePaymentOptions()">Proceed to Payment</button>
+    </div>
+
+    <div class="card-details" *ngIf="showPaymentOptions">
+        <div class="text-center mt-2">
+          <div #paymentRef class="paypal-button-container"></div> <!-- Container for PayPal button -->
+          <button class="btn btn-secondary mt-2" (click)="cancel()">Cancel</button>
+        </div>
+      </div>
+  
+      
   </div>
   
+ 

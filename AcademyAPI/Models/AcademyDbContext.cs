@@ -1,4 +1,5 @@
 ﻿using AcademyAPI.Models.Classes;
+using AcademyAPI.Models.Financials;
 using Microsoft.EntityFrameworkCore;
 
 namespace AcademyAPI.Models
@@ -18,5 +19,22 @@ namespace AcademyAPI.Models
         public DbSet<StudentFees> studfees { get; set; }
         public DbSet<InstructorInfo> instinfo { get; set; }
         public DbSet<StaffInfo> staffinfo { get; set; }
+        public DbSet<Payment> payments { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Configure the Payment entity
+            modelBuilder.Entity<Payment>(entity =>
+            {
+                entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
+                // Alternatively, use HasPrecision method:
+                // entity.Property(e => e.Amount).HasPrecision(18, 2);
+            });
+
+            // Add any additional model configurations here
+        }
+
     }
 }
