@@ -1,5 +1,7 @@
 ﻿using AcademyAPI.Models.Classes;
 using AcademyAPI.Models.Financials;
+using AcademyAPI.Models.Users;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AcademyAPI.Models
@@ -10,6 +12,7 @@ namespace AcademyAPI.Models
         {
 
         }
+        public DbSet<User> users { get; set; }
         public DbSet<StyleInfo> styleinfo { get; set; }
         public DbSet<Programs> programs { get; set; }
         public DbSet<ProgramDays> progdays { get; set; }

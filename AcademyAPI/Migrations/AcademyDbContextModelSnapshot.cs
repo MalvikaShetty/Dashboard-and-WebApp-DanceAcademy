@@ -304,6 +304,31 @@ namespace AcademyAPI.Migrations
 
                     b.ToTable("styleinfo");
                 });
+
+            modelBuilder.Entity("AcademyAPI.Models.Users.User", b =>
+                {
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Username");
+
+                    b.ToTable("users");
+                });
 #pragma warning restore 612, 618
         }
     }

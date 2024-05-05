@@ -4,9 +4,11 @@ using AcademyAPI.Models;
 using AcademyAPI.Models.Classes;
 using Microsoft.Data.SqlClient;
 using AcademyAPI.StoredProcedures;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AcademyAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
 
@@ -23,12 +25,14 @@ namespace AcademyAPI.Controllers
 
 
         [HttpGet("getstudent")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<StudentInfo>>> GetStudents()
         {
             return await _context.studinfo.ToListAsync();
         }
 
         [HttpGet("getstudentclass")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<StudentClass>>> GetStudentClass()
         {
             return await _context.studclass.ToListAsync();
