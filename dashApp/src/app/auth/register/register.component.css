@@ -1,0 +1,37 @@
+.social-icon{
+    height:30px;
+    width:30px;
+  }
+
+  .facebook-btn {
+    color: #4267B2; /* Icon color set to white for contrast */
+    border: none; /* Optional: removes the button border */
+  }
+
+  .facebook-btn {
+    padding: 8px; /* Adjust padding to scale the button around the icon */
+  }
+
+
+  /* Professional Button Styling */
+  .professional-button {
+    padding: 10px 20px; /* Adequate padding for button text */
+    font-size: 16px; /* Appropriate text size for readability */
+    color: rgb(53, 51, 51); /* Text color for contrast */
+    background-image: linear-gradient(to right, #e5cbf4, #f9f2fb); /* Gradient from deep purple to indigo */
+    border: none; /* No border for a modern look */
+    border-radius: 5px; /* Slightly rounded corners */
+    cursor: pointer; /* Cursor indicates clickable item */
+    outline: none; /* Remove focus outline */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transitions for hover effects */
+  }
+  
+  .professional-button:hover, .professional-button:focus {
+    background-image: linear-gradient(to right, #d1cfd2, #838183); /* Slightly lighter gradient for hover state */
+    box-shadow: 0 4px 15px rgba(156, 39, 176, 0.4); /* Subtle shadow to lift the button off the page */
+  }
+  
+  .professional-button:active {
+    transform: translateY(2px); /* Slight push down effect on click */
+    box-shadow: 0 2px 8px rgba(156, 39, 176, 0.5); /* Deeper shadow for clicked state */
+  }

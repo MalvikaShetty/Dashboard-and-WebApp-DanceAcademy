@@ -4,9 +4,10 @@
 
 export const environment = {
   production: false,
-  // STRIPE_KEY: 'pk_test_51PB2KOEsxPuQXt7JL7djNYcUYSs5eoCGa71KkJ0GqyE5u7bszBktFNtZVmMTU8OGojOq98oP2hbxtQNSn1mNcasD00FPTBAG1t',
-  paypalClientId:'Ae2VBOYYa-vpEdfmloXky5z_IsoBwzAZJrc3QqGZAAuvDS9NDGCXaLDKTzaxwszqiKwFRDt_CnKh7kA7'
+  paypalClientId:'Your_id',
+  googleClientId: 'your_id'
 };
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

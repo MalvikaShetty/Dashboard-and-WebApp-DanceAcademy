@@ -9,13 +9,17 @@ namespace AcademyAPI.Models.Users
         public string Password { get; set; } = "";
         public string Role { get; set; } = "User";
         public bool IsActive { get; set; } = false;
-        public string Token { get; set; } = "";
+        public bool? EmailConfirmed { get; set; } = false;
 
-        public User(string username, string password, string role)
+        // This enables the one-to-many relationship where a user can have many refresh tokens
+        public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
+
+        public User() { }
+       /* public User(string? username, string? password, bool? emailConfirmed)
         {
             Username = username;
             Password = password;
-            Role = role;
-        }
+            EmailConfirmed = emailConfirmed;
+        }*/
     }
 }

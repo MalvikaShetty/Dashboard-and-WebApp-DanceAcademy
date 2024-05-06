@@ -1,0 +1,42 @@
+/* Styles for the tab buttons */
+/* welcome.component.css */
+.button-group {
+    display: flex; /* Aligns buttons in a row */
+    border-bottom: 1px solid #ccc; /* Adds a light underline across all buttons */
+  }
+  
+  .tab-button {
+    background-color: transparent; /* Makes background transparent */
+    border: none; /* Removes border */
+    color: white; /* Sets text color to white */
+    padding: 10px 20px; /* Adds padding for spacing */
+    margin: 0 10px; /* Adds horizontal spacing between buttons */
+    cursor: pointer; /* Changes cursor to pointer on hover */
+    position: relative; /* Needed for positioning the pseudo-element for underline */
+    outline: none; /* Removes focus outline */
+  }
+  
+  .tab-button:focus {
+    outline: none; /* Ensures no outline appears on focus */
+  }
+  
+  .tab-button:hover {
+    text-decoration: none; /* Removes underline on hover if any */
+  }
+  
+  /* Active state styles */
+  .tab-button.active, .tab-button:hover {
+    color: #cae1fa; /* Changes text color on active/hover */
+  }
+  
+  .tab-button.active::after, .tab-button:hover::after {
+    content: ''; /* Creates a pseudo-element for underline */
+    position: absolute; /* Positions it at the bottom */
+    left: 0;
+    right: 0;
+    bottom: -1px; /* Aligns just below the button text */
+    height: 2px; /* Height of the underline */
+    background-color: #0056b3; /* Color of the underline */
+    width: 100%; /* Full width */
+  }
+  

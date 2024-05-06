@@ -10,6 +10,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: '/welcome', pathMatch: 'full' },
   {path:'dash',component:DashComponent},
   {path:'login',component:LoginComponent},
   {path:'register',component:RegisterComponent},

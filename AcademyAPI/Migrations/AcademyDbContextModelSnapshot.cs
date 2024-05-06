@@ -17,7 +17,7 @@ namespace AcademyAPI.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.2")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -305,10 +305,39 @@ namespace AcademyAPI.Migrations
                     b.ToTable("styleinfo");
                 });
 
+            modelBuilder.Entity("AcademyAPI.Models.Users.RefreshToken", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Expires")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Username");
+
+                    b.ToTable("refreshTokens");
+                });
+
             modelBuilder.Entity("AcademyAPI.Models.Users.User", b =>
                 {
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool?>("EmailConfirmed")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -321,13 +350,25 @@ namespace AcademyAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Token")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Username");
 
                     b.ToTable("users");
+                });
+
+            modelBuilder.Entity("AcademyAPI.Models.Users.RefreshToken", b =>
+                {
+                    b.HasOne("AcademyAPI.Models.Users.User", "User")
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("Username")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("AcademyAPI.Models.Users.User", b =>
+                {
+                    b.Navigation("RefreshTokens");
                 });
 #pragma warning restore 612, 618
         }

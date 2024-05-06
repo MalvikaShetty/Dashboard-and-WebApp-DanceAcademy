@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from './Services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -8,12 +10,24 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'dashApp';
+  isLoggedIn: boolean = false;
+  private authSubscription?: Subscription;
 
-  username = localStorage.getItem('username');
+  constructor(private router: Router, public authservice:AuthService) {}
 
-  constructor(private router: Router) {}
-
-  isLoggedIn(): boolean {
-    return !!this.username;  // Convert username presence into a boolean
+  ngOnInit(): void {
+    this.authSubscription = this.authservice.currentUser.subscribe(user => {
+      if (user) {
+        this.isLoggedIn = true;
+        this.router.navigate(['/dash']);  // Navigate to dashboard if logged in
+      } else {
+        this.router.navigate(['/']);  // Navigate to login if not logged in
+      }
+    });
   }
+
+  ngOnDestroy(): void {
+    this.authSubscription?.unsubscribe();
+  }
+  
 }

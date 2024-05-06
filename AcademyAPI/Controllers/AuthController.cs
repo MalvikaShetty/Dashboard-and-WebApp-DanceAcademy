@@ -3,12 +3,7 @@ using AcademyAPI.Models.Dtos;
 using AcademyAPI.Models.Users;
 using AcademyAPI.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace AcademyAPI.Controllers
 {
@@ -16,7 +11,6 @@ namespace AcademyAPI.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-
         private readonly IAuthService _authService;
 
         public AuthController(IAuthService authService)
@@ -26,52 +20,88 @@ namespace AcademyAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] UserDto user)
+        public async Task<IActionResult> Register([FromBody] UserDto userDto)
         {
-            if (String.IsNullOrEmpty(user.Username))
+            if (string.IsNullOrEmpty(userDto.Username))
             {
-                return BadRequest(new { message = "Username needs to be entered" });
+                return BadRequest(new { message = "Username is required." });
             }
-            else if (String.IsNullOrEmpty(user.Password))
+            else if (string.IsNullOrEmpty(userDto.Password))
             {
-                return BadRequest(new { message = "Password needs to be entered" });
+                return BadRequest(new { message = "Password is required." });
             }
-            User userToRegister = new(user.Username, user.Password, user.Role);
+            User userToRegister = new User { Username = userDto.Username, Password = userDto.Password, IsActive = true };
 
-            User registeredUser = await _authService.Register(userToRegister);
-            User loggedInUser = await _authService.Login(registeredUser.Username, user.Password);
+            var registeredUser = await _authService.Register(userToRegister);
+            var (user, token) = await _authService.Login(registeredUser.Username, userDto.Password);
 
-            if (loggedInUser != null)
+            if (user != null && !string.IsNullOrEmpty(token))
             {
-                return Ok(loggedInUser);
+                // Return only safe user data
+                return Ok(new { User = new { user.Username, user.Role, user.IsActive }, Token = token });
             }
 
-            return BadRequest(new { message = "User registration unsuccessful" });
-
+            return BadRequest(new { message = "User registration unsuccessful." });
         }
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginDto user)
+        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
-            if (String.IsNullOrEmpty(user.Username))
+            if (string.IsNullOrEmpty(loginDto.Username))
             {
-                return BadRequest(new { message = "Username needs to entered" });
+                return BadRequest(new { message = "Username is required." });
             }
-            else if (String.IsNullOrEmpty(user.Password))
+            else if (string.IsNullOrEmpty(loginDto.Password))
             {
-                return BadRequest(new { message = "Password needs to entered" });
-            }
-
-            User loggedInUser = await _authService.Login(user.Username, user.Password);
-
-            if (loggedInUser != null)
-            {
-                return Ok(loggedInUser);
+                return BadRequest(new { message = "Password is required." });
             }
 
-            return BadRequest(new { message = "User login unsuccessful" });
+            var (user, token) = await _authService.Login(loginDto.Username, loginDto.Password);
 
+            if (user != null && !string.IsNullOrEmpty(token))
+            {
+                // Return only safe user data
+                return Ok(new { User = new { user.Username, user.Role, user.IsActive }, Token = token });
+            }
+
+            return BadRequest(new { message = "User login unsuccessful. Please check username and password." });
+        }
+
+        [HttpPost("google-login")]
+        public async Task<IActionResult> GoogleLogin([FromBody] GoogleTokenDto tokenDto)
+        {
+            if (string.IsNullOrEmpty(tokenDto.IdToken))
+            {
+                return BadRequest(new { message = "Google token is missing." });
+            }
+
+            var (user, token) = await _authService.AuthenticateGoogleUser(tokenDto.IdToken);
+
+            if (user == null || string.IsNullOrEmpty(token))
+            {
+                return BadRequest(new { message = "Google authentication failed." });
+            }
+
+            return Ok(new { User = new { user.Username, user.Role, user.IsActive }, Token = token });
+        }
+
+
+        [HttpPost("refresh-token")]
+        public async Task<IActionResult> RefreshToken()
+        {
+            if (!Request.Cookies.TryGetValue("refreshToken", out var refreshToken))
+            {
+                return BadRequest("Refresh token is missing.");
+            }
+
+            var result = await _authService.RefreshToken(refreshToken);
+            if (!result.IsSuccess)
+            {
+                return Unauthorized("Refresh token is not valid or has expired.");
+            }
+
+            return Ok(new { Token = result.Token });
         }
 
         [HttpPost("update-role/{username}")]
@@ -82,8 +112,7 @@ namespace AcademyAPI.Controllers
                 return BadRequest("Role is required.");
             }
 
-            // Checking the role to be "Admin" or any other roles before updating
-            if (roleUpdate.Role != "Admin" && roleUpdate.Role != "User") // Extend with other roles as necessary
+            if (roleUpdate.Role != "Admin" && roleUpdate.Role != "User")  // Extend with other roles as necessary
             {
                 return BadRequest("Invalid role specified.");
             }
@@ -94,8 +123,7 @@ namespace AcademyAPI.Controllers
                 return NotFound("User not found.");
             }
 
-            return Ok("User role updated successfully to " + roleUpdate.Role);
+            return Ok($"User role updated successfully to {roleUpdate.Role}.");
         }
-
     }
 }

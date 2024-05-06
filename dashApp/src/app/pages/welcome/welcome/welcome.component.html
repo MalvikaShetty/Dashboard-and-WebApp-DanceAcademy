@@ -1,0 +1,22 @@
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8 text-center">
+        <h1>Welcome to Dance Academy!</h1>
+        <p>Select an option to continue:</p>
+        <div class="btn-group mt-3" role="group" aria-label="Basic example">
+            <div class="button-group">
+                <button (click)="showLogin = true; showRegister = false" routerLinkActive="active" class="tab-button">Login</button>
+                <button (click)="showRegister = true; showLogin = false" routerLinkActive="active" class="tab-button">Register</button>
+              </div>
+              
+        </div>
+      </div>
+      <div *ngIf="showLogin">
+        <app-login></app-login> <!-- Assuming 'app-login' is your login component selector -->
+      </div>
+      <div *ngIf="showRegister">
+        <app-register></app-register> <!-- Assuming 'app-register' is your register component selector -->
+      </div>
+    </div>
+  </div>

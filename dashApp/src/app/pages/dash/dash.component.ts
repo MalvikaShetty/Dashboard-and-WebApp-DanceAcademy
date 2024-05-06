@@ -1,7 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import Chart, { Colors } from 'chart.js/auto';
-import { withLatestFrom } from 'rxjs';
+import { Subscription, withLatestFrom } from 'rxjs';
 import { AcademyService } from '../../Services/academy.service';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/Services/auth.service';
 
 
 @Component({
@@ -13,7 +15,7 @@ import { AcademyService } from '../../Services/academy.service';
 
 export class DashComponent implements OnInit {
 
-  constructor(public service:AcademyService, private cdr: ChangeDetectorRef) { }
+  constructor(public service:AcademyService, private cdr: ChangeDetectorRef, private router: Router, public authservice: AuthService) { }
   transform(val:string , length:number):string {
     return val.length > length ? `${val.substring(0, length)} ...` : val
   }
@@ -28,9 +30,15 @@ export class DashComponent implements OnInit {
   instFreeCount:any;
   totalStudents=0;
 
+  
+  isLoggedIn: boolean = false;
+  private authSubscription?: Subscription;
+
 
   ngOnInit(): void {
-
+    this.authSubscription = this.authservice.currentUser.subscribe(user => {
+      this.isLoggedIn = !!user;
+    });
    
     this.service.getPermInstCount().subscribe((data)=>this.instPermCount =data);
     this.service.getFreelanceInstCount().subscribe((data)=>this.instFreeCount =data);
@@ -209,6 +217,11 @@ export class DashComponent implements OnInit {
      });
 
      pieChart.update();
+  }
+
+
+  ngOnDestroy(): void {
+    this.authSubscription?.unsubscribe();
   }
 
 

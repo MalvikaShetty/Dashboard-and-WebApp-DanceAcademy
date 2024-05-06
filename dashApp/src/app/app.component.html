@@ -1,14 +1,17 @@
-<div *ngIf="!username">
-<app-login></app-login>
-<app-register></app-register>
-</div>
-<aside *ngIf="username"class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-gradient-dark" id="sidenav-main">
+<!-- <div class="welcome-page"> -->
+
+
+<aside *ngIf="isLoggedIn" class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-gradient-dark" id="sidenav-main">
 <app-side-menu></app-side-menu>
 </aside>
-<main *ngIf="username" class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+<div *ngIf="!isLoggedIn" class="welcome-page">
+  <app-welcome></app-welcome>
+</div>
+<main *ngIf="isLoggedIn" class="main-content overflow-x-hidden position-relative max-height-vh-100 h-100 border-radius-lg ">
   <!-- Navbar -->
 <app-header></app-header>
   <!-- End Navbar -->
 <router-outlet></router-outlet>
 
 </main>
+<!-- </div> -->

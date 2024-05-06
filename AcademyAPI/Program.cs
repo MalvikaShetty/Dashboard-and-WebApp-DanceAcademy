@@ -44,8 +44,8 @@ builder.Services.AddControllers();
         };
     }).AddGoogle(options =>
         {
-            options.ClientId = "YourGoogleClientId";
-            options.ClientSecret = "YourGoogleClientSecret";
+            options.ClientId = builder.Configuration["GoogleLogin:GoogleClientID"]!;
+            options.ClientSecret = builder.Configuration["GoogleLogin:GoogleClientSecret"]!; ;
         });
 
 
