@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './Services/auth.service';
 import { Subscription } from 'rxjs';
+import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +13,9 @@ export class AppComponent {
   title = 'dashApp';
   isLoggedIn: boolean = false;
   private authSubscription?: Subscription;
+  su!: SocialUser;
 
-  constructor(private router: Router, public authservice:AuthService) {}
+  constructor(private router: Router, public authservice:AuthService,private socialAuthService: SocialAuthService ) {}
 
   ngOnInit(): void {
     this.authSubscription = this.authservice.currentUser.subscribe(user => {

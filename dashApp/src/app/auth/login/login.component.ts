@@ -11,11 +11,14 @@ import { User } from 'src/app/models/Users/user.models';
 export class LoginComponent implements OnInit {
   user: User = new User(); // Assuming User class has username, password, etc.
   errorMessage: string = '';
+  userGoogle! : any;
 
   constructor(private authService: AuthService, 
               private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loginWithGoogle();
+  }
   
   onLogin(): void {
     this.authService.login(this.user).subscribe({
@@ -34,6 +37,8 @@ export class LoginComponent implements OnInit {
 
   loginWithGoogle(): void {
     this.authService.signInWithGoogle();
+    console.log('Google login successful');
+    this.router.navigate(['/dash']);
   }
 
   // In your Angular component

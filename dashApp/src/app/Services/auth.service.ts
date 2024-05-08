@@ -4,8 +4,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { User } from '../models/Users/user.models';
 import { Router } from '@angular/router';
-import { GoogleLoginProvider, SocialAuthService } from '@abacritt/angularx-social-login';
+import { GoogleLoginProvider, SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
+import { environment } from 'src/environments/environment';
 
+declare var google: any;
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +15,7 @@ export class AuthService {
   private readonly baseUrl = "https://localhost:44316/api/Auth";
   private currentUserSubject: BehaviorSubject<User | null>; // Correctly typed to include null
   public currentUser: Observable<User | null>;
-
+  user! : SocialUser;
   constructor(private http: HttpClient, private router: Router,  private socialAuthService: SocialAuthService ) {
     // Proper initialization to handle null
     const storedUser = localStorage.getItem('currentUser');
@@ -43,12 +45,18 @@ export class AuthService {
   }
 
   signInWithGoogle(): void {
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(googleUser => {
-      this.googleLogin(googleUser.idToken).subscribe();
-    }).catch(error => {
-      console.error('Google Sign-In error:', error);
-    });
+    this.socialAuthService.authState.subscribe((user:SocialUser) =>{ 
+      console.log(user);
+      this.googleLogin(user.idToken).subscribe();
+    })
   }
+  
+    // this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(googleUser => {
+    //   this.googleLogin(googleUser.idToken).subscribe();
+    // }).catch(error => {
+    //   console.error('Google Sign-In error:', error);
+    // });
+  
 
   logout() {
     // remove user from local storage to log user out
