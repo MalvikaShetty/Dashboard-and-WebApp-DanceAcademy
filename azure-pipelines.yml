@@ -15,41 +15,42 @@ variables:
   solution: 'AcademyAPI/AcademyAPI.sln'
   project: 'AcademyAPI/AcademyAPI.csproj'
 
-steps:
-- task: NuGetToolInstaller@1
-  name: 'NuGetToolInstaller'
-  displayName: 'NuGet tool Installer'
-  
-- task: NuGetCommand@2
-  name: 'NuGetRestore'
-  displayName: 'NuGet restore packages'
-  inputs:
-    command: 'restore'
-    restoreSolution: '$(solution)'
-    feedsToUse: 'select'
+jobs:
+- job: Build_and_Publish
+  steps:
+  - task: NuGetToolInstaller@1
+    name: 'NuGetToolInstaller'
+    displayName: 'NuGet tool Installer'
+  - task: UseDotNet@2
+    inputs:
+      packageType: 'sdk'
+      version: '3.1.x'
+      installationPath: $(Agent.ToolsDirectory)/dotnet
+
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'restore'
+      projects: '$(project)'
+
+  - task: DotNetCoreCLI@2
+    name: 'BuildProject'
+    displayName: Build the project
+    inputs:
+      command: 'build'
+      projects: '$(project)'
+      arguments: '--configuration $(buildConfiguration)'
+
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'publish'
+      projects: '$(project)'
+      arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+
+  - task: PublishBuildArtifacts@1
+    name: 'PublishBuildArtifacts'
+    displayName: 'Publish Build Artifacts'
+    inputs:
+      pathToPublish: '$(Build.ArtifactStagingDirectory)'
+      artifactName: 'AzureDanceProject'
+      publishLocation: 'container'
  
-- task: DotNetCoreCLI@2
-  name: 'BuildProject'
-  displayName: Build the project
-  inputs:
-    command: 'build'
-    projects: '$(project)'
-    arguments: '--configuration $(BuildConfiguration)'
-
-- task: DotNetCoreCLI@2
-  name: 'Publish'
-  displayName: 'Publish'
-  inputs:
-    command: 'publish'
-    publishWebProjects: false
-    projects: '$(project)'
-    arguments: '--configuration $(BuildConfiguration) -- output $(Build.ArtifactStagingDirectory)'
-    zipAfterPublish: false
-
-- task: PublishBuildArtifacts@1
-  name: 'PublishBuildArtifacts'
-  displayName: 'Publish Build Artifacts'
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'AzureDanceProject'
-    publishLocation: 'Container'
