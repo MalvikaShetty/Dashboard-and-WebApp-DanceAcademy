@@ -12,8 +12,8 @@ pool:
 variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  solution: '**/MalvikaShetty.Dashboard-and-WebApp-DanceAcademy.sln'
-  project: '**/MalvikaShetty.Dashboard-and-WebApp-DanceAcademy.csproj'
+  solution: 'AcademyAPI/AcademyAPI.sln'
+  project: 'AcademyAPI/AcademyAPI.csproj'
 
 steps:
 - task: NuGetToolInstaller@1
